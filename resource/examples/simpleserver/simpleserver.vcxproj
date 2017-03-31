@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{290DD360-D660-4EE5-9822-314342554E3C}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>simpleserver</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WITH_UPSTREAM_LIBCOAP;__WITH_DTLS__;__WITH_TLS__;MULTIPLE_OWNER;ROUTING_EP;WITH_BWT;NO_EDR_ADAPTER;NO_LE_ADAPTER;IP_ADAPTER;TCP_ADAPTER;WITH_TCP;NO_NFC_ADAPTER;RD_CLIENT;RD_SERVER;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>..\..\..\extlibs\tinycbor\tinycbor\src;..\..\..\resource\c_common;..\..\..\out\windows\x86\$(Configuration)\resource\c_common\oic_malloc\include;..\..\..\resource\c_common\oic_malloc\include;..\..\..\out\windows\x86\$(Configuration)\resource\c_common\oic_string\include;..\..\..\resource\c_common\oic_string\include;..\..\..\out\windows\x86\$(Configuration)\resource\c_common\oic_time\include;..\..\..\resource\c_common\oic_time\include;..\..\..\out\windows\x86\$(Configuration)\resource\c_common\ocatomic\include;..\..\..\resource\c_common\ocatomic\include;..\..\..\out\windows\x86\$(Configuration)\resource\c_common\ocrandom\include;..\..\..\resource\c_common\ocrandom\include;..\..\..\out\windows\x86\$(Configuration)\resource\c_common\octhread\include;..\..\..\resource\c_common\octhread\include;..\..\..\out\windows\x86\$(Configuration)\resource\c_common\oic_platform\include;..\..\..\resource\c_common\oic_platform\include;..\..\..\extlibs\mbedtls\mbedtls\include;..\..\..\out\windows\x86\$(Configuration)\resource\c_common\windows\include;..\..\..\resource\c_common\windows\include;..\..\..\out\windows\x86\$(Configuration)\resource\csdk\logger\include;..\..\..\resource\csdk\logger\include;..\..\..\resource\c_common;..\..\..\out\windows\x86\$(Configuration)\resource\csdk\routing\include;..\..\..\resource\csdk\routing\include;..\..\..\extlibs\boost\boost;..\..\..\resource\csdk\security\include;..\..\..\resource\include;..\..\..\resource\csdk\include;..\..\..\resource\csdk\stack\include;..\..\..\resource\c_common\ocrandom\include;..\..\..\resource\csdk\logger\include;..\..\..\resource\oc_logger\include;</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4127;4200;4201;4204;4214;4232;4706;</DisableSpecificWarnings>
+      <TreatSpecificWarningsAsErrors>4133</TreatSpecificWarningsAsErrors>
+      <AdditionalIncludeDirectories>..\..\..\extlibs\tinycbor\tinycbor\src;..\..\..\resource\c_common;..\..\..\out\windows\amd64\debug\resource\c_common\oic_malloc\include;..\..\..\resource\c_common\oic_malloc\include;..\..\..\out\windows\amd64\debug\resource\c_common\oic_string\include;..\..\..\resource\c_common\oic_string\include;..\..\..\out\windows\amd64\debug\resource\c_common\oic_time\include;..\..\..\resource\c_common\oic_time\include;..\..\..\out\windows\amd64\debug\resource\c_common\ocatomic\include;..\..\..\resource\c_common\ocatomic\include;..\..\..\out\windows\amd64\debug\resource\c_common\ocrandom\include;..\..\..\resource\c_common\ocrandom\include;..\..\..\out\windows\amd64\debug\resource\c_common\octhread\include;..\..\..\resource\c_common\octhread\include;..\..\..\out\windows\amd64\debug\resource\c_common\oic_platform\include;..\..\..\resource\c_common\oic_platform\include;..\..\..\extlibs\mbedtls\mbedtls\include;..\..\..\out\windows\amd64\debug\resource\c_common\windows\include;..\..\..\resource\c_common\windows\include;..\..\..\out\windows\amd64\debug\resource\csdk\logger\include;..\..\..\resource\csdk\logger\include;..\..\..\resource\c_common;..\..\..\out\windows\amd64\debug\resource\csdk\routing\include;..\..\..\resource\csdk\routing\include;..\..\..\extlibs\boost\boost;..\..\..\resource\csdk\security\include;..\..\..\resource\include;..\..\..\resource\csdk\include;..\..\..\resource\csdk\stack\include;..\..\..\resource\c_common\ocrandom\include;..\..\..\resource\csdk\logger\include;..\..\..\resource\oc_logger\include;..\..\..\;</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\..\..\out\windows\amd64\$(Configuration);..\..\..\.;..\..\..\out\windows\amd64\$(Configuration)\extlibs\sqlite3;..\..\..\extlibs\sqlite3;..\..\..\out\windows\amd64\$(Configuration)\resource\c_common;..\..\..\resource\c_common;..\..\..\out\windows\amd64\$(Configuration)\resource\csdk\logger;..\..\..\resource\csdk\logger;..\..\..\out\windows\amd64\$(Configuration)\resource\csdk\routing;..\..\..\resource\csdk\routing;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>mswsock.lib;coap.lib;logger.lib;c_common.lib;bcrypt.lib;ws2_32.lib;iphlpapi.lib;crypt32.lib;win_helper.lib;routingmanager.lib;connectivity_abstraction.lib;oc_logger.lib;octbstack.lib;oc.lib;mbedtls.lib;mbedx509.lib;mbedcrypto.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WITH_UPSTREAM_LIBCOAP;__WITH_DTLS__;__WITH_TLS__;MULTIPLE_OWNER;ROUTING_EP;WITH_BWT;NO_EDR_ADAPTER;NO_LE_ADAPTER;IP_ADAPTER;TCP_ADAPTER;WITH_TCP;NO_NFC_ADAPTER;RD_CLIENT;RD_SERVER;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <DisableSpecificWarnings>4127;4200;4201;4204;4214;4232;4706;</DisableSpecificWarnings>
+      <TreatSpecificWarningsAsErrors>4133</TreatSpecificWarningsAsErrors>
+      <AdditionalIncludeDirectories>..\..\..\extlibs\tinycbor\tinycbor\src;..\..\..\resource\c_common;..\..\..\out\windows\amd64\$(Configuration)\resource\c_common\oic_malloc\include;..\..\..\resource\c_common\oic_malloc\include;..\..\..\out\windows\amd64\$(Configuration)\resource\c_common\oic_string\include;..\..\..\resource\c_common\oic_string\include;..\..\..\out\windows\amd64\$(Configuration)\resource\c_common\oic_time\include;..\..\..\resource\c_common\oic_time\include;..\..\..\out\windows\amd64\$(Configuration)\resource\c_common\ocatomic\include;..\..\..\resource\c_common\ocatomic\include;..\..\..\out\windows\amd64\$(Configuration)\resource\c_common\ocrandom\include;..\..\..\resource\c_common\ocrandom\include;..\..\..\out\windows\amd64\$(Configuration)\resource\c_common\octhread\include;..\..\..\resource\c_common\octhread\include;..\..\..\out\windows\amd64\$(Configuration)\resource\c_common\oic_platform\include;..\..\..\resource\c_common\oic_platform\include;..\..\..\extlibs\mbedtls\mbedtls\include;..\..\..\out\windows\amd64\$(Configuration)\resource\c_common\windows\include;..\..\..\resource\c_common\windows\include;..\..\..\out\windows\amd64\$(Configuration)\resource\csdk\logger\include;..\..\..\resource\csdk\logger\include;..\..\..\resource\c_common;..\..\..\out\windows\amd64\$(Configuration)\resource\csdk\routing\include;..\..\..\resource\csdk\routing\include;..\..\..\extlibs\boost\boost;..\..\..\resource\csdk\security\include;..\..\..\resource\include;..\..\..\resource\csdk\include;..\..\..\resource\csdk\stack\include;..\..\..\resource\c_common\ocrandom\include;..\..\..\resource\csdk\logger\include;..\..\..\resource\oc_logger\include;</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\..\..\out\windows\amd64\$(Configuration);..\..\..\.;..\..\..\out\windows\amd64\$(Configuration)\extlibs\sqlite3;..\..\..\extlibs\sqlite3;..\..\..\out\windows\amd64\$(Configuration)\resource\c_common;..\..\..\resource\c_common;..\..\..\out\windows\amd64\$(Configuration)\resource\csdk\logger;..\..\..\resource\csdk\logger;..\..\..\out\windows\amd64\$(Configuration)\resource\csdk\routing;..\..\..\resource\csdk\routing;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>mswsock.lib;coap.lib;logger.lib;c_common.lib;bcrypt.lib;ws2_32.lib;iphlpapi.lib;crypt32.lib;win_helper.lib;routingmanager.lib;connectivity_abstraction.lib;oc_logger.lib;octbstack.lib;oc.lib;mbedtls.lib;mbedx509.lib;mbedcrypto.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WITH_UPSTREAM_LIBCOAP;__WITH_DTLS__;__WITH_TLS__;MULTIPLE_OWNER;ROUTING_EP;WITH_BWT;NO_EDR_ADAPTER;NO_LE_ADAPTER;IP_ADAPTER;TCP_ADAPTER;WITH_TCP;NO_NFC_ADAPTER;RD_CLIENT;RD_SERVER;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>..\..\..\extlibs\tinycbor\tinycbor\src;..\..\..\resource\c_common;..\..\..\out\windows\x86\$(Configuration)\resource\c_common\oic_malloc\include;..\..\..\resource\c_common\oic_malloc\include;..\..\..\out\windows\x86\$(Configuration)\resource\c_common\oic_string\include;..\..\..\resource\c_common\oic_string\include;..\..\..\out\windows\x86\$(Configuration)\resource\c_common\oic_time\include;..\..\..\resource\c_common\oic_time\include;..\..\..\out\windows\x86\$(Configuration)\resource\c_common\ocatomic\include;..\..\..\resource\c_common\ocatomic\include;..\..\..\out\windows\x86\$(Configuration)\resource\c_common\ocrandom\include;..\..\..\resource\c_common\ocrandom\include;..\..\..\out\windows\x86\$(Configuration)\resource\c_common\octhread\include;..\..\..\resource\c_common\octhread\include;..\..\..\out\windows\x86\$(Configuration)\resource\c_common\oic_platform\include;..\..\..\resource\c_common\oic_platform\include;..\..\..\extlibs\mbedtls\mbedtls\include;..\..\..\out\windows\x86\$(Configuration)\resource\c_common\windows\include;..\..\..\resource\c_common\windows\include;..\..\..\out\windows\x86\$(Configuration)\resource\csdk\logger\include;..\..\..\resource\csdk\logger\include;..\..\..\resource\c_common;..\..\..\out\windows\x86\$(Configuration)\resource\csdk\routing\include;..\..\..\resource\csdk\routing\include;..\..\..\extlibs\boost\boost;..\..\..\resource\csdk\security\include;..\..\..\resource\include;..\..\..\resource\csdk\include;..\..\..\resource\csdk\stack\include;..\..\..\resource\c_common\ocrandom\include;..\..\..\resource\csdk\logger\include;..\..\..\resource\oc_logger\include;</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4127;4200;4201;4204;4214;4232;4706;</DisableSpecificWarnings>
+      <TreatSpecificWarningsAsErrors>4133</TreatSpecificWarningsAsErrors>
+      <AdditionalIncludeDirectories>..\..\..\extlibs\tinycbor\tinycbor\src;..\..\..\resource\c_common;..\..\..\out\windows\amd64\debug\resource\c_common\oic_malloc\include;..\..\..\resource\c_common\oic_malloc\include;..\..\..\out\windows\amd64\debug\resource\c_common\oic_string\include;..\..\..\resource\c_common\oic_string\include;..\..\..\out\windows\amd64\debug\resource\c_common\oic_time\include;..\..\..\resource\c_common\oic_time\include;..\..\..\out\windows\amd64\debug\resource\c_common\ocatomic\include;..\..\..\resource\c_common\ocatomic\include;..\..\..\out\windows\amd64\debug\resource\c_common\ocrandom\include;..\..\..\resource\c_common\ocrandom\include;..\..\..\out\windows\amd64\debug\resource\c_common\octhread\include;..\..\..\resource\c_common\octhread\include;..\..\..\out\windows\amd64\debug\resource\c_common\oic_platform\include;..\..\..\resource\c_common\oic_platform\include;..\..\..\extlibs\mbedtls\mbedtls\include;..\..\..\out\windows\amd64\debug\resource\c_common\windows\include;..\..\..\resource\c_common\windows\include;..\..\..\out\windows\amd64\debug\resource\csdk\logger\include;..\..\..\resource\csdk\logger\include;..\..\..\resource\c_common;..\..\..\out\windows\amd64\debug\resource\csdk\routing\include;..\..\..\resource\csdk\routing\include;..\..\..\extlibs\boost\boost;..\..\..\resource\csdk\security\include;..\..\..\resource\include;..\..\..\resource\csdk\include;..\..\..\resource\csdk\stack\include;..\..\..\resource\c_common\ocrandom\include;..\..\..\resource\csdk\logger\include;..\..\..\resource\oc_logger\include;..\..\..\;</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\..\..\out\windows\amd64\$(Configuration);..\..\..\.;..\..\..\out\windows\amd64\$(Configuration)\extlibs\sqlite3;..\..\..\extlibs\sqlite3;..\..\..\out\windows\amd64\$(Configuration)\resource\c_common;..\..\..\resource\c_common;..\..\..\out\windows\amd64\$(Configuration)\resource\csdk\logger;..\..\..\resource\csdk\logger;..\..\..\out\windows\amd64\$(Configuration)\resource\csdk\routing;..\..\..\resource\csdk\routing;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>mswsock.lib;coap.lib;logger.lib;c_common.lib;bcrypt.lib;ws2_32.lib;iphlpapi.lib;crypt32.lib;win_helper.lib;routingmanager.lib;connectivity_abstraction.lib;oc_logger.lib;octbstack.lib;oc.lib;mbedtls.lib;mbedx509.lib;mbedcrypto.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WITH_UPSTREAM_LIBCOAP;__WITH_DTLS__;__WITH_TLS__;MULTIPLE_OWNER;ROUTING_EP;WITH_BWT;NO_EDR_ADAPTER;NO_LE_ADAPTER;IP_ADAPTER;TCP_ADAPTER;WITH_TCP;NO_NFC_ADAPTER;RD_CLIENT;RD_SERVER;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <DisableSpecificWarnings>4127;4200;4201;4204;4214;4232;4706;</DisableSpecificWarnings>
+      <TreatSpecificWarningsAsErrors>4133</TreatSpecificWarningsAsErrors>
+      <AdditionalIncludeDirectories>..\..\..\extlibs\tinycbor\tinycbor\src;..\..\..\resource\c_common;..\..\..\out\windows\amd64\$(Configuration)\resource\c_common\oic_malloc\include;..\..\..\resource\c_common\oic_malloc\include;..\..\..\out\windows\amd64\$(Configuration)\resource\c_common\oic_string\include;..\..\..\resource\c_common\oic_string\include;..\..\..\out\windows\amd64\$(Configuration)\resource\c_common\oic_time\include;..\..\..\resource\c_common\oic_time\include;..\..\..\out\windows\amd64\$(Configuration)\resource\c_common\ocatomic\include;..\..\..\resource\c_common\ocatomic\include;..\..\..\out\windows\amd64\$(Configuration)\resource\c_common\ocrandom\include;..\..\..\resource\c_common\ocrandom\include;..\..\..\out\windows\amd64\$(Configuration)\resource\c_common\octhread\include;..\..\..\resource\c_common\octhread\include;..\..\..\out\windows\amd64\$(Configuration)\resource\c_common\oic_platform\include;..\..\..\resource\c_common\oic_platform\include;..\..\..\extlibs\mbedtls\mbedtls\include;..\..\..\out\windows\amd64\$(Configuration)\resource\c_common\windows\include;..\..\..\resource\c_common\windows\include;..\..\..\out\windows\amd64\$(Configuration)\resource\csdk\logger\include;..\..\..\resource\csdk\logger\include;..\..\..\resource\c_common;..\..\..\out\windows\amd64\$(Configuration)\resource\csdk\routing\include;..\..\..\resource\csdk\routing\include;..\..\..\extlibs\boost\boost;..\..\..\resource\csdk\security\include;..\..\..\resource\include;..\..\..\resource\csdk\include;..\..\..\resource\csdk\stack\include;..\..\..\resource\c_common\ocrandom\include;..\..\..\resource\csdk\logger\include;..\..\..\resource\oc_logger\include;</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\..\..\out\windows\amd64\$(Configuration);..\..\..\.;..\..\..\out\windows\amd64\$(Configuration)\extlibs\sqlite3;..\..\..\extlibs\sqlite3;..\..\..\out\windows\amd64\$(Configuration)\resource\c_common;..\..\..\resource\c_common;..\..\..\out\windows\amd64\$(Configuration)\resource\csdk\logger;..\..\..\resource\csdk\logger;..\..\..\out\windows\amd64\$(Configuration)\resource\csdk\routing;..\..\..\resource\csdk\routing;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>mswsock.lib;coap.lib;logger.lib;c_common.lib;bcrypt.lib;ws2_32.lib;iphlpapi.lib;crypt32.lib;win_helper.lib;routingmanager.lib;connectivity_abstraction.lib;oc_logger.lib;octbstack.lib;oc.lib;mbedtls.lib;mbedx509.lib;mbedcrypto.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\simpleserver.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
