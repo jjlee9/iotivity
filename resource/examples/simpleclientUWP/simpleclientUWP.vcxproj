@@ -109,6 +109,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>..\..\..\out\windows\arm\$(Configuration);..\..\..\.;..\..\..\out\windows\arm\$(Configuration)\extlibs\sqlite3;..\..\..\extlibs\sqlite3;..\..\..\out\windows\arm\$(Configuration)\resource\c_common;..\..\..\resource\c_common;..\..\..\out\windows\arm\$(Configuration)\resource\csdk\logger;..\..\..\resource\csdk\logger;..\..\..\out\windows\arm\$(Configuration)\resource\csdk\routing;..\..\..\resource\csdk\routing;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>coap.lib;logger.lib;c_common.lib;win_helper.lib;routingmanager.lib;connectivity_abstraction.lib;oc_logger.lib;octbstack.lib;oc.lib;mbedtls.lib;mbedx509.lib;mbedcrypto.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
@@ -121,6 +122,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>..\..\..\out\windows\arm\$(Configuration);..\..\..\.;..\..\..\out\windows\arm\$(Configuration)\extlibs\sqlite3;..\..\..\extlibs\sqlite3;..\..\..\out\windows\arm\$(Configuration)\resource\c_common;..\..\..\resource\c_common;..\..\..\out\windows\arm\$(Configuration)\resource\csdk\logger;..\..\..\resource\csdk\logger;..\..\..\out\windows\arm\$(Configuration)\resource\csdk\routing;..\..\..\resource\csdk\routing;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>coap.lib;logger.lib;c_common.lib;win_helper.lib;routingmanager.lib;connectivity_abstraction.lib;oc_logger.lib;octbstack.lib;oc.lib;mbedtls.lib;mbedx509.lib;mbedcrypto.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -133,6 +135,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>..\..\..\out\windows\x86\$(Configuration);..\..\..\.;..\..\..\out\windows\x86\$(Configuration)\extlibs\sqlite3;..\..\..\extlibs\sqlite3;..\..\..\out\windows\x86\$(Configuration)\resource\c_common;..\..\..\resource\c_common;..\..\..\out\windows\x86\$(Configuration)\resource\csdk\logger;..\..\..\resource\csdk\logger;..\..\..\out\windows\x86\$(Configuration)\resource\csdk\routing;..\..\..\resource\csdk\routing;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>coap.lib;logger.lib;c_common.lib;win_helper.lib;routingmanager.lib;connectivity_abstraction.lib;oc_logger.lib;octbstack.lib;oc.lib;mbedtls.lib;mbedx509.lib;mbedcrypto.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -145,6 +148,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>..\..\..\out\windows\x86\$(Configuration);..\..\..\.;..\..\..\out\windows\x86\$(Configuration)\extlibs\sqlite3;..\..\..\extlibs\sqlite3;..\..\..\out\windows\x86\$(Configuration)\resource\c_common;..\..\..\resource\c_common;..\..\..\out\windows\x86\$(Configuration)\resource\csdk\logger;..\..\..\resource\csdk\logger;..\..\..\out\windows\x86\$(Configuration)\resource\csdk\routing;..\..\..\resource\csdk\routing;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>coap.lib;logger.lib;c_common.lib;win_helper.lib;routingmanager.lib;connectivity_abstraction.lib;oc_logger.lib;octbstack.lib;oc.lib;mbedtls.lib;mbedx509.lib;mbedcrypto.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -157,6 +161,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>..\..\..\out\windows\amd64\$(Configuration);..\..\..\.;..\..\..\out\windows\amd64\$(Configuration)\extlibs\sqlite3;..\..\..\extlibs\sqlite3;..\..\..\out\windows\amd64\$(Configuration)\resource\c_common;..\..\..\resource\c_common;..\..\..\out\windows\amd64\$(Configuration)\resource\csdk\logger;..\..\..\resource\csdk\logger;..\..\..\out\windows\amd64\$(Configuration)\resource\csdk\routing;..\..\..\resource\csdk\routing;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>coap.lib;logger.lib;c_common.lib;win_helper.lib;routingmanager.lib;connectivity_abstraction.lib;oc_logger.lib;octbstack.lib;oc.lib;mbedtls.lib;mbedx509.lib;mbedcrypto.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -169,9 +174,12 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>..\..\..\out\windows\amd64\$(Configuration);..\..\..\.;..\..\..\out\windows\amd64\$(Configuration)\extlibs\sqlite3;..\..\..\extlibs\sqlite3;..\..\..\out\windows\amd64\$(Configuration)\resource\c_common;..\..\..\resource\c_common;..\..\..\out\windows\amd64\$(Configuration)\resource\csdk\logger;..\..\..\resource\csdk\logger;..\..\..\out\windows\amd64\$(Configuration)\resource\csdk\routing;..\..\..\resource\csdk\routing;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>coap.lib;logger.lib;c_common.lib;win_helper.lib;routingmanager.lib;connectivity_abstraction.lib;oc_logger.lib;octbstack.lib;oc.lib;mbedtls.lib;mbedx509.lib;mbedcrypto.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Helper.h" />
+    <ClInclude Include="IAsyncFunctions.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h">
       <DependentUpon>App.xaml</DependentUpon>
@@ -192,6 +200,21 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <None Include="..\..\..\device_properties.dat">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\out\windows\x86\$(Configuration)\octbstack.dll" Condition="'$(Platform)'=='Win32'">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\out\windows\arm\$(Configuration)\octbstack.dll" Condition="'$(Platform)'=='ARM'">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\out\windows\amd64\$(Configuration)\octbstack.dll" Condition="'$(Platform)'=='x64'">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\oic_svr_db_client.dat">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="simpleclientUWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -207,6 +230,7 @@
     <ClCompile Include="App.xaml.cpp">
       <DependentUpon>App.xaml</DependentUpon>
     </ClCompile>
+    <ClCompile Include="Helper.cpp" />
     <ClCompile Include="MainPage.xaml.cpp">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </ClCompile>

@@ -16,11 +16,14 @@
     <ClCompile Include="App.xaml.cpp" />
     <ClCompile Include="MainPage.xaml.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Helper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h" />
     <ClInclude Include="MainPage.xaml.h" />
+    <ClInclude Include="IAsyncFunctions.h" />
+    <ClInclude Include="Helper.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png">
@@ -50,6 +53,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="simpleclientUWP_TemporaryKey.pfx" />
+    <None Include="..\..\..\out\windows\x86\$(Configuration)\octbstack.dll" Condition="'$(Platform)'=='Win32'" />
+    <None Include="..\..\..\out\windows\arm\$(Configuration)\octbstack.dll" Condition="'$(Platform)'=='ARM'" />
+    <None Include="..\..\..\out\windows\amd64\$(Configuration)\octbstack.dll" Condition="'$(Platform)'=='x64'" />
+    <None Include="..\..\..\device_properties.dat" />
+    <None Include="..\oic_svr_db_client.dat" />
+    <None Include="..\..\..\out\windows\amd64\$(Configuration)\octbstack.dll" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />
