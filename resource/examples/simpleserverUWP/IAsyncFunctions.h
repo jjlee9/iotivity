@@ -2,7 +2,7 @@
 
 namespace simpleserverUWP
 {
-public interface struct IAsyncFunction
+public interface struct IAsyncFunctions
 {
     void ShowRequestText(Platform::String^ msg);
     void ShowEventText(Platform::String^ msg);

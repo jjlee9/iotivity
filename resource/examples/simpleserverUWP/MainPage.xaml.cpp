@@ -758,7 +758,7 @@ void serverThread()
     return;
 }
 
-IAsyncFunction^ MainPage::Current = nullptr;
+IAsyncFunctions^ MainPage::Current = nullptr;
 
 MainPage::MainPage()
 {

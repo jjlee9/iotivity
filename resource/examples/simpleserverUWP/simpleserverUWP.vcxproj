@@ -179,7 +179,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Helper.h" />
-    <ClInclude Include="IAsyncFunction.h" />
+    <ClInclude Include="IAsyncFunctions.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h">
       <DependentUpon>App.xaml</DependentUpon>
@@ -212,7 +212,9 @@
     <None Include="..\light_introspection.json">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="..\oic_svr_db_server.dat" />
+    <None Include="..\oic_svr_db_server.dat">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="simpleserverUWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

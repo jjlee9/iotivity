@@ -6,14 +6,14 @@
 #pragma once
 
 #include "MainPage.g.h"
-#include "IAsyncFunction.h"
+#include "IAsyncFunctions.h"
 
 namespace simpleserverUWP
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public ref class MainPage sealed : public IAsyncFunction
+    public ref class MainPage sealed : public IAsyncFunctions
     {
     public:
         MainPage();
@@ -22,7 +22,7 @@ namespace simpleserverUWP
         virtual void ShowEventText(Platform::String^ msg);
 
     internal:
-        static IAsyncFunction^ Current;
+        static IAsyncFunctions^ Current;
 
     private:
         void Start_Button_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);

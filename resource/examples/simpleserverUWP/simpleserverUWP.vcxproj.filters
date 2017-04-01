@@ -22,8 +22,8 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h" />
     <ClInclude Include="MainPage.xaml.h" />
-    <ClInclude Include="IAsyncFunction.h" />
     <ClInclude Include="Helper.h" />
+    <ClInclude Include="IAsyncFunctions.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png">
@@ -57,7 +57,6 @@
     <None Include="..\..\..\out\windows\arm\$(Configuration)\octbstack.dll" Condition="'$(Platform)'=='ARM'" />
     <None Include="..\..\..\out\windows\amd64\$(Configuration)\octbstack.dll" Condition="'$(Platform)'=='x64'" />
     <None Include="..\oic_svr_db_server.dat" />
-    <None Include="..\..\..\out\windows\amd64\$(Configuration)\octbstack.dll" />
     <None Include="..\light_introspection.json" />
   </ItemGroup>
   <ItemGroup>
