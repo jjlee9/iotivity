@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9224d6d3-f3e8-457b-8a1f-baab047608df}</ProjectGuid>
@@ -74,44 +74,31 @@
     <PlatformToolset>v140</PlatformToolset>
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
   </PropertyGroup>
-
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-
   <PropertyGroup Label="UserMacros" />
-
   <PropertyGroup>
-    
     <PackageCertificateKeyFile>simpleserverUWP_TemporaryKey.pfx</PackageCertificateKeyFile>
-    
   </PropertyGroup>
-
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
@@ -122,6 +109,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>..\..\..\out\windows\arm\$(Configuration);..\..\..\.;..\..\..\out\windows\arm\$(Configuration)\extlibs\sqlite3;..\..\..\extlibs\sqlite3;..\..\..\out\windows\arm\$(Configuration)\resource\c_common;..\..\..\resource\c_common;..\..\..\out\windows\arm\$(Configuration)\resource\csdk\logger;..\..\..\resource\csdk\logger;..\..\..\out\windows\arm\$(Configuration)\resource\csdk\routing;..\..\..\resource\csdk\routing;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>coap.lib;logger.lib;c_common.lib;win_helper.lib;routingmanager.lib;connectivity_abstraction.lib;oc_logger.lib;octbstack.lib;oc.lib;mbedtls.lib;mbedx509.lib;mbedcrypto.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
@@ -134,6 +122,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>..\..\..\out\windows\arm\$(Configuration);..\..\..\.;..\..\..\out\windows\arm\$(Configuration)\extlibs\sqlite3;..\..\..\extlibs\sqlite3;..\..\..\out\windows\arm\$(Configuration)\resource\c_common;..\..\..\resource\c_common;..\..\..\out\windows\arm\$(Configuration)\resource\csdk\logger;..\..\..\resource\csdk\logger;..\..\..\out\windows\arm\$(Configuration)\resource\csdk\routing;..\..\..\resource\csdk\routing;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>coap.lib;logger.lib;c_common.lib;win_helper.lib;routingmanager.lib;connectivity_abstraction.lib;oc_logger.lib;octbstack.lib;oc.lib;mbedtls.lib;mbedx509.lib;mbedcrypto.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -146,6 +135,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>..\..\..\out\windows\x86\$(Configuration);..\..\..\.;..\..\..\out\windows\x86\$(Configuration)\extlibs\sqlite3;..\..\..\extlibs\sqlite3;..\..\..\out\windows\x86\$(Configuration)\resource\c_common;..\..\..\resource\c_common;..\..\..\out\windows\x86\$(Configuration)\resource\csdk\logger;..\..\..\resource\csdk\logger;..\..\..\out\windows\x86\$(Configuration)\resource\csdk\routing;..\..\..\resource\csdk\routing;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>coap.lib;logger.lib;c_common.lib;win_helper.lib;routingmanager.lib;connectivity_abstraction.lib;oc_logger.lib;octbstack.lib;oc.lib;mbedtls.lib;mbedx509.lib;mbedcrypto.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -158,6 +148,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>..\..\..\out\windows\x86\$(Configuration);..\..\..\.;..\..\..\out\windows\x86\$(Configuration)\extlibs\sqlite3;..\..\..\extlibs\sqlite3;..\..\..\out\windows\x86\$(Configuration)\resource\c_common;..\..\..\resource\c_common;..\..\..\out\windows\x86\$(Configuration)\resource\csdk\logger;..\..\..\resource\csdk\logger;..\..\..\out\windows\x86\$(Configuration)\resource\csdk\routing;..\..\..\resource\csdk\routing;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>coap.lib;logger.lib;c_common.lib;win_helper.lib;routingmanager.lib;connectivity_abstraction.lib;oc_logger.lib;octbstack.lib;oc.lib;mbedtls.lib;mbedx509.lib;mbedcrypto.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -170,6 +161,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>..\..\..\out\windows\amd64\$(Configuration);..\..\..\.;..\..\..\out\windows\amd64\$(Configuration)\extlibs\sqlite3;..\..\..\extlibs\sqlite3;..\..\..\out\windows\amd64\$(Configuration)\resource\c_common;..\..\..\resource\c_common;..\..\..\out\windows\amd64\$(Configuration)\resource\csdk\logger;..\..\..\resource\csdk\logger;..\..\..\out\windows\amd64\$(Configuration)\resource\csdk\routing;..\..\..\resource\csdk\routing;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>coap.lib;logger.lib;c_common.lib;win_helper.lib;routingmanager.lib;connectivity_abstraction.lib;oc_logger.lib;octbstack.lib;oc.lib;mbedtls.lib;mbedx509.lib;mbedcrypto.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -182,19 +174,20 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>..\..\..\out\windows\amd64\$(Configuration);..\..\..\.;..\..\..\out\windows\amd64\$(Configuration)\extlibs\sqlite3;..\..\..\extlibs\sqlite3;..\..\..\out\windows\amd64\$(Configuration)\resource\c_common;..\..\..\resource\c_common;..\..\..\out\windows\amd64\$(Configuration)\resource\csdk\logger;..\..\..\resource\csdk\logger;..\..\..\out\windows\amd64\$(Configuration)\resource\csdk\routing;..\..\..\resource\csdk\routing;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>coap.lib;logger.lib;c_common.lib;win_helper.lib;routingmanager.lib;connectivity_abstraction.lib;oc_logger.lib;octbstack.lib;oc.lib;mbedtls.lib;mbedx509.lib;mbedcrypto.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-
   <ItemGroup>
+    <ClInclude Include="Helper.h" />
+    <ClInclude Include="IAsyncFunction.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h">
-        <DependentUpon>App.xaml</DependentUpon>
+      <DependentUpon>App.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="MainPage.xaml.h">
-        <DependentUpon>MainPage.xaml</DependentUpon>
+      <DependentUpon>MainPage.xaml</DependentUpon>
     </ClInclude>
   </ItemGroup>
-
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
@@ -203,16 +196,25 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    
+    <None Include="..\..\..\out\windows\x86\$(Configuration)\octbstack.dll" Condition="'$(Platform)'=='Win32'">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\out\windows\arm\$(Configuration)\octbstack.dll" Condition="'$(Platform)'=='ARM'">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\out\windows\amd64\$(Configuration)\octbstack.dll" Condition="'$(Platform)'=='x64'">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\light_introspection.json">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\oic_svr_db_server.dat" />
     <None Include="simpleserverUWP_TemporaryKey.pfx" />
-    
   </ItemGroup>
-
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png" />
     <Image Include="Assets\SplashScreen.scale-200.png" />
@@ -222,15 +224,14 @@
     <Image Include="Assets\StoreLogo.png" />
     <Image Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
-
   <ItemGroup>
     <ClCompile Include="App.xaml.cpp">
-        <DependentUpon>App.xaml</DependentUpon>
+      <DependentUpon>App.xaml</DependentUpon>
     </ClCompile>
+    <ClCompile Include="Helper.cpp" />
     <ClCompile Include="MainPage.xaml.cpp">
-        <DependentUpon>MainPage.xaml</DependentUpon>
+      <DependentUpon>MainPage.xaml</DependentUpon>
     </ClCompile>
-
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -240,10 +241,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
-
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-
 </Project>

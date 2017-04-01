@@ -8,6 +8,32 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel Margin="0,20,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="4*"/>
+                </Grid.RowDefinitions>
 
+                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Button x:Name="StartBtn" Click="Start_Button_Click" Margin="15,15,0,0">Server Start</Button>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">
+                    <TextBlock Text="Received Request:" TextWrapping="Wrap" Margin="0,30,0,0"/>
+                    <TextBlock x:Name="RequestText" TextWrapping="Wrap" Margin="0,10,0,0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">
+                    <TextBlock Text="Light Event Log:" TextWrapping="Wrap" Margin="0,30,0,0"/>
+                    <TextBlock x:Name="EventText" TextWrapping="Wrap" Margin="0,10,0,0"/>
+                </StackPanel>
+
+            </Grid>
+        </StackPanel>
     </Grid>
 </Page>
