@@ -5,6 +5,6 @@ namespace simpleserverUWP
 class Helper
 {
 public:
-    static Platform::String^ CharPtrToPlatformString(const char* char_str);
+    static Platform::String^ CharPtrToPlatformString(const char* char_ptr);
 };
 }
