@@ -2,7 +2,9 @@
 #include <memory>
 #include "Helper.h"
 
-Platform::String^ simpleclientUWP::Helper::CharPtrToPlatformString(const char* char_ptr)
+using namespace simpleclientUWP;
+
+Platform::String^ Helper::CharPtrToPlatformString(const char* char_ptr)
 {
     auto wchar_str_size = ::strlen(char_ptr) + 1;
     auto wchar_str_unique = std::make_unique<wchar_t[]>(wchar_str_size);
@@ -12,7 +14,7 @@ Platform::String^ simpleclientUWP::Helper::CharPtrToPlatformString(const char* c
     return ref new Platform::String(wchar_str);
 }
 
-std::wstring simpleclientUWP::Helper::CharPtrToStdWString(const char* char_ptr)
+std::wstring Helper::CharPtrToStdWString(const char* char_ptr)
 {
     auto wchar_str_size = ::strlen(char_ptr) + 1;
     auto wchar_str_unique = std::make_unique<wchar_t[]>(wchar_str_size);

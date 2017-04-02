@@ -7,6 +7,7 @@
 
 #include "MainPage.g.h"
 #include "IAsyncFunctions.h"
+#include "IoTivityClient.h"
 
 namespace simpleclientUWP
 {
@@ -29,7 +30,14 @@ namespace simpleclientUWP
     internal:
         static IAsyncFunctions^ Async;
 
+    protected:
+        virtual void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) override;
+
     private:
+        void OnLoaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+        void OnUnloaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void Start_Button_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
+
+        std::unique_ptr<IoTivityClient> iotivity_client;
     };
 }

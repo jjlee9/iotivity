@@ -17,6 +17,7 @@
     <ClCompile Include="MainPage.xaml.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Helper.cpp" />
+    <ClCompile Include="IoTivityClient.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -24,6 +25,7 @@
     <ClInclude Include="MainPage.xaml.h" />
     <ClInclude Include="IAsyncFunctions.h" />
     <ClInclude Include="Helper.h" />
+    <ClInclude Include="IoTivityClient.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png">
@@ -58,7 +60,7 @@
     <None Include="..\..\..\out\windows\amd64\$(Configuration)\octbstack.dll" Condition="'$(Platform)'=='x64'" />
     <None Include="..\..\..\device_properties.dat" />
     <None Include="..\oic_svr_db_client.dat" />
-    <None Include="..\..\..\out\windows\amd64\$(Configuration)\octbstack.dll" />
+    <None Include="..\..\..\oic_svr_db.dat" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />

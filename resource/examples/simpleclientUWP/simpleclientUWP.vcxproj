@@ -180,6 +180,7 @@
   <ItemGroup>
     <ClInclude Include="Helper.h" />
     <ClInclude Include="IAsyncFunctions.h" />
+    <ClInclude Include="IoTivityClient.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h">
       <DependentUpon>App.xaml</DependentUpon>
@@ -201,6 +202,9 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="..\..\..\device_properties.dat">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\oic_svr_db.dat">
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="..\..\..\out\windows\x86\$(Configuration)\octbstack.dll" Condition="'$(Platform)'=='Win32'">
@@ -231,6 +235,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="Helper.cpp" />
+    <ClCompile Include="IoTivityClient.cpp" />
     <ClCompile Include="MainPage.xaml.cpp">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </ClCompile>

@@ -788,7 +788,7 @@ MainPage::MainPage()
     MainPage::Async = this;
 }
 
-void simpleserverUWP::MainPage::ShowNotify(
+void MainPage::ShowNotify(
     Platform::String^ msg,
     NotifyType        type)
 {
@@ -817,7 +817,7 @@ void MainPage::ShowEventText(Platform::String^ msg)
     }));
 }
 
-void simpleserverUWP::MainPage::Notify(
+void MainPage::Notify(
     Platform::String^ msg,
     NotifyType        type)
 {
@@ -846,7 +846,7 @@ void simpleserverUWP::MainPage::Notify(
     }
 }
 
-void simpleserverUWP::MainPage::Start_Button_Click(
+void MainPage::Start_Button_Click(
     Platform::Object^                   sender,
     Windows::UI::Xaml::RoutedEventArgs^ e)
 {

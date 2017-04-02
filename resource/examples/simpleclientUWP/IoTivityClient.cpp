@@ -1,54 +1,11 @@
-﻿//
-// MainPage.xaml.cpp
-// Implementation of the MainPage class.
-//
-
 #include "pch.h"
 #include "MainPage.xaml.h"
+#include "IoTivityClient.h"
+#include "Helper.h"
 
 using namespace simpleclientUWP;
 
 using namespace Platform;
-using namespace Windows::Foundation;
-using namespace Windows::Foundation::Collections;
-using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Controls::Primitives;
-using namespace Windows::UI::Xaml::Data;
-using namespace Windows::UI::Xaml::Input;
-using namespace Windows::UI::Xaml::Media;
-using namespace Windows::UI::Xaml::Navigation;
-
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
-#if 0
-
-using namespace OC;
-
-static const char* SVR_DB_FILE_NAME = "./oic_svr_db_client.dat";
-typedef std::map<OCResourceIdentifier, std::shared_ptr<OCResource>> DiscoveredResourceMap;
-
-DiscoveredResourceMap discoveredResources;
-std::shared_ptr<OCResource> curResource;
-static ObserveType OBSERVE_TYPE_TO_USE = ObserveType::Observe;
-static OCConnectivityType TRANSPORT_TYPE_TO_USE = OCConnectivityType::CT_ADAPTER_IP;
-std::mutex curResourceLock;
-
-class Light
-{
-public:
-
-    bool m_state;
-    int m_power;
-    std::string m_name;
-
-    Light() : m_state(false), m_power(0), m_name("")
-    {
-    }
-};
-
-Light mylight;
 
 int observe_count()
 {
@@ -56,8 +13,15 @@ int observe_count()
     return ++oc;
 }
 
-void onObserve(const HeaderOptions /*headerOptions*/, const OCRepresentation& rep,
-    const int& eCode, const int& sequenceNumber)
+IoTivityClient::IoTivityClient()
+{
+}
+
+void IoTivityClient::onObserve(
+    const HeaderOptions     /*headerOptions*/,
+    const OCRepresentation& rep,
+    const int&              eCode,
+    const int&              sequenceNumber)
 {
     try
     {
@@ -124,8 +88,10 @@ void onObserve(const HeaderOptions /*headerOptions*/, const OCRepresentation& re
 
 }
 
-void onPost2(const HeaderOptions& /*headerOptions*/,
-    const OCRepresentation& rep, const int eCode)
+void IoTivityClient::onPost2(
+    const HeaderOptions&    /*headerOptions*/,
+    const OCRepresentation& rep,
+    const int               eCode)
 {
     try
     {
@@ -155,7 +121,11 @@ void onPost2(const HeaderOptions& /*headerOptions*/,
             else if (OBSERVE_TYPE_TO_USE == ObserveType::ObserveAll)
                 std::cout << std::endl << "ObserveAll is used." << std::endl << std::endl;
 
-            curResource->observe(OBSERVE_TYPE_TO_USE, QueryParamsMap(), &onObserve);
+            curResource->observe(OBSERVE_TYPE_TO_USE, QueryParamsMap(),
+                [this](const HeaderOptions& a, const OCRepresentation& b, const int c, const int d)
+            {
+                this->onObserve(a, b, c, d);
+            });
 
         }
         else
@@ -171,8 +141,10 @@ void onPost2(const HeaderOptions& /*headerOptions*/,
 
 }
 
-void onPost(const HeaderOptions& /*headerOptions*/,
-    const OCRepresentation& rep, const int eCode)
+void IoTivityClient::onPost(
+    const HeaderOptions&    /*headerOptions*/,
+    const OCRepresentation& rep,
+    const int               eCode)
 {
     try
     {
@@ -207,7 +179,11 @@ void onPost(const HeaderOptions& /*headerOptions*/,
             rep2.setValue("state", mylight.m_state);
             rep2.setValue("power", mylight.m_power);
 
-            curResource->post(rep2, QueryParamsMap(), &onPost2);
+            curResource->post(rep2, QueryParamsMap(),
+                [this](const HeaderOptions& a, const OCRepresentation& b, const int c)
+            {
+                this->onPost2(a, b, c);
+            });
         }
         else
         {
@@ -222,7 +198,8 @@ void onPost(const HeaderOptions& /*headerOptions*/,
 }
 
 // Local function to put a different state for this resource
-void postLightRepresentation(std::shared_ptr<OCResource> resource)
+void IoTivityClient::postLightRepresentation(
+    std::shared_ptr<OCResource> resource)
 {
     if (resource)
     {
@@ -237,12 +214,18 @@ void postLightRepresentation(std::shared_ptr<OCResource> resource)
         rep.setValue("power", mylight.m_power);
 
         // Invoke resource's post API with rep, query map and the callback parameter
-        resource->post(rep, QueryParamsMap(), &onPost);
+        resource->post(rep, QueryParamsMap(),
+            [this](const HeaderOptions& a, const OCRepresentation& b, const int c)
+        {
+            this->onPost(a, b, c);
+        });
     }
 }
 
-// callback handler on PUT request
-void onPut(const HeaderOptions& /*headerOptions*/, const OCRepresentation& rep, const int eCode)
+void IoTivityClient::onPut(
+    const HeaderOptions&    /*headerOptions*/,
+    const OCRepresentation& rep,
+    const int               eCode)
 {
     try
     {
@@ -272,8 +255,8 @@ void onPut(const HeaderOptions& /*headerOptions*/, const OCRepresentation& rep, 
     }
 }
 
-// Local function to put a different state for this resource
-void putLightRepresentation(std::shared_ptr<OCResource> resource)
+void IoTivityClient::putLightRepresentation(
+    std::shared_ptr<OCResource> resource)
 {
     if (resource)
     {
@@ -288,12 +271,18 @@ void putLightRepresentation(std::shared_ptr<OCResource> resource)
         rep.setValue("power", mylight.m_power);
 
         // Invoke resource's put API with rep, query map and the callback parameter
-        resource->put(rep, QueryParamsMap(), &onPut);
+        resource->put(rep, QueryParamsMap(),
+            [this](const HeaderOptions& a, const OCRepresentation& b, const int c)
+        {
+            this->onPut(a, b, c);
+        });
     }
 }
 
-// Callback handler on GET request
-void onGet(const HeaderOptions& /*headerOptions*/, const OCRepresentation& rep, const int eCode)
+void IoTivityClient::onGet(
+    const HeaderOptions&    /*headerOptions*/,
+    const OCRepresentation& rep,
+    const int               eCode)
 {
     try
     {
@@ -324,8 +313,7 @@ void onGet(const HeaderOptions& /*headerOptions*/, const OCRepresentation& rep, 
     }
 }
 
-// Local function to get representation of light resource
-void getLightRepresentation(std::shared_ptr<OCResource> resource)
+void IoTivityClient::getLightRepresentation(std::shared_ptr<OCResource> resource)
 {
     if (resource)
     {
@@ -333,12 +321,15 @@ void getLightRepresentation(std::shared_ptr<OCResource> resource)
         // Invoke resource's get API with the callback parameter
 
         QueryParamsMap test;
-        resource->get(test, &onGet);
+        resource->get(test,
+            [this](const HeaderOptions& a, const OCRepresentation& b, const int c)
+        {
+            this->onGet(a, b, c);
+        });
     }
 }
 
-// Callback to found resources
-void foundResource(std::shared_ptr<OCResource> resource)
+void IoTivityClient::foundResource(std::shared_ptr<OCResource> resource)
 {
     std::cout << "In foundResource\n";
     std::string resourceURI;
@@ -443,7 +434,7 @@ void foundResource(std::shared_ptr<OCResource> resource)
                     swprintf_s(msgbuf, L"\tAddress of selected resource: %s\n",
                         Helper::StdStringToStdWString(resource->host()).c_str());
                     MainPage::Async->ShowFoundText(ref new String(msgbuf));
-                  //std::cout << "\tAddress of selected resource: " << resource->host() << std::endl;
+                    //std::cout << "\tAddress of selected resource: " << resource->host() << std::endl;
 
                     // Call a local function which will internally invoke get API on the resource pointer
                     getLightRepresentation(resource);
@@ -463,19 +454,7 @@ void foundResource(std::shared_ptr<OCResource> resource)
     }
 }
 
-void printUsage()
-{
-    std::cout << std::endl;
-    std::cout << "---------------------------------------------------------------------\n";
-    std::cout << "Usage : simpleclient <ObserveType> <TransportType>" << std::endl;
-    std::cout << "   ObserveType : 1 - Observe" << std::endl;
-    std::cout << "   ObserveType : 2 - ObserveAll" << std::endl;
-    std::cout << "   TransportType : 1 - IP" << std::endl;
-    std::cout << "   TransportType : 2 - TCP" << std::endl;
-    std::cout << "---------------------------------------------------------------------\n\n";
-}
-
-void checkObserverValue(int value)
+void IoTivityClient::checkObserverValue(int value)
 {
     if (value == 1)
     {
@@ -494,7 +473,7 @@ void checkObserverValue(int value)
     }
 }
 
-void checkTransportValue(int value)
+void IoTivityClient::checkTransportValue(int value)
 {
     if (1 == value)
     {
@@ -513,7 +492,9 @@ void checkTransportValue(int value)
     }
 }
 
-static FILE* client_open(const char* path, const char* mode)
+FILE* IoTivityClient::client_open(
+    const char* path,
+    const char* mode)
 {
     if (0 == strcmp(path, OC_SECURITY_DB_DAT_FILE_NAME))
     {
@@ -525,13 +506,13 @@ static FILE* client_open(const char* path, const char* mode)
     }
 }
 
-void clientThread() {
-
+void IoTivityClient::clientThread()
+{
     std::ostringstream requestURI;
     OCPersistentStorage ps{ client_open, fread, fwrite, fclose, unlink };
     try
     {
-      //printUsage();
+        //printUsage();
         int argc = 1;
 
         if (argc == 1)
@@ -540,14 +521,14 @@ void clientThread() {
         }
         else if (argc == 2)
         {
-          //checkObserverValue(std::stoi(argv[1]));
+            //checkObserverValue(std::stoi(argv[1]));
             checkObserverValue(1);
         }
         else if (argc == 3)
         {
-          //checkObserverValue(std::stoi(argv[1]));
+            //checkObserverValue(std::stoi(argv[1]));
             checkObserverValue(1);
-          //checkTransportValue(std::stoi(argv[2]));
+            //checkTransportValue(std::stoi(argv[2]));
             checkTransportValue(1);
         }
         else
@@ -584,14 +565,20 @@ void clientThread() {
         requestURI << OC_RSRVD_WELL_KNOWN_URI;// << "?rt=core.light";
 
         OCPlatform::findResource("", requestURI.str(),
-            CT_DEFAULT, &foundResource);
+            CT_DEFAULT, [this](std::shared_ptr<OCResource> a)
+        {
+            this->foundResource(a);
+        });
         std::cout << "Finding Resource... " << std::endl;
 
         // Find resource is done twice so that we discover the original resources a second time.
         // These resources will have the same uniqueidentifier (yet be different objects), so that
         // we can verify/show the duplicate-checking code in foundResource(above);
         OCPlatform::findResource("", requestURI.str(),
-            CT_DEFAULT, &foundResource);
+            CT_DEFAULT, [this](std::shared_ptr<OCResource> a)
+        {
+            this->foundResource(a);
+        });
         std::cout << "Finding Resource for second time..." << std::endl;
 
         // A condition variable will free the mutex it is given, then do a non-
@@ -613,120 +600,4 @@ void clientThread() {
     }
 
     return;
-}
-
-#endif
-
-IAsyncFunctions^ MainPage::Async = nullptr;
-
-MainPage::MainPage()
-{
-    InitializeComponent();
-    MainPage::Async = this;
-}
-
-void MainPage::ShowNotify(
-    Platform::String^ msg,
-    NotifyType        type)
-{
-    Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal,
-        ref new Windows::UI::Core::DispatchedHandler([this, msg, type]()
-    {
-        Notify(msg, type);
-    }));
-}
-
-void MainPage::ShowFoundText(Platform::String^ msg)
-{
-    Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal,
-        ref new Windows::UI::Core::DispatchedHandler([this, msg]()
-    {
-        FoundText->Text += msg;
-    }));
-}
-
-void MainPage::ClearFoundText()
-{
-    Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal,
-        ref new Windows::UI::Core::DispatchedHandler([this]()
-    {
-        FoundText->Text = "";
-    }));
-}
-
-void MainPage::ShowResultText(Platform::String^ msg)
-{
-    Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal,
-        ref new Windows::UI::Core::DispatchedHandler([this, msg]()
-    {
-        ResultText->Text += msg;
-    }));
-}
-
-void MainPage::ClearResultText()
-{
-    Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal,
-        ref new Windows::UI::Core::DispatchedHandler([this]()
-    {
-        ResultText->Text = "";
-    }));
-}
-
-void MainPage::Notify(
-    Platform::String^ msg,
-    NotifyType        type)
-{
-    switch (type)
-    {
-    case NotifyType::Status:
-        NotifyBorder->Background = ref new SolidColorBrush(Colors::Green);
-        break;
-    case NotifyType::Error:
-        NotifyBorder->Background = ref new SolidColorBrush(Colors::Red);
-        break;
-    default:
-        break;
-    }
-
-    NotifyBlock->Text = msg;
-
-    // Collapse the StatusBlock if it has no text to conserve real estate.
-    if (NotifyBlock->Text != "")
-    {
-        NotifyBorder->Visibility = Xaml::Visibility::Visible;
-    }
-    else
-    {
-        NotifyBorder->Visibility = Xaml::Visibility::Collapsed;
-    }
-}
-
-void MainPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs ^ e)
-{
-    Loaded += ref new RoutedEventHandler(this, &MainPage::OnLoaded);
-    Unloaded += ref new RoutedEventHandler(this, &MainPage::OnUnloaded);
-}
-
-void MainPage::OnLoaded(
-    Platform::Object^                  sender,
-    Windows::UI::Xaml::RoutedEventArgs^ e)
-{
-    iotivity_client = std::make_unique<IoTivityClient>();
-}
-
-void MainPage::OnUnloaded(
-    Platform::Object^                  sender,
-    Windows::UI::Xaml::RoutedEventArgs^ e)
-{
-    iotivity_client.reset();
-}
-
-void MainPage::Start_Button_Click(
-    Platform::Object^                   sender,
-    Windows::UI::Xaml::RoutedEventArgs^ e)
-{
-    StartBtn->IsEnabled = false;
-
-    std::thread asyncThread(&IoTivityClient::clientThread, iotivity_client.get());
-    asyncThread.detach();
 }
