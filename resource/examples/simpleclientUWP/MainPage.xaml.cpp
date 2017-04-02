@@ -95,7 +95,7 @@ void onObserve(const HeaderOptions /*headerOptions*/, const OCRepresentation& re
                 mylight.m_state ? L"true" : L"false",
                 mylight.m_power,
                 Helper::StdStringToStdWString(mylight.m_name).c_str());
-            MainPage::Current->ShowResultText(ref new String(msgbuf));
+            MainPage::Async->ShowResultText(ref new String(msgbuf));
 
           //std::cout << "OBSERVE RESULT:" << std::endl;
           //std::cout << "\tSequenceNumber: " << sequenceNumber << std::endl;
@@ -458,7 +458,7 @@ void foundResource(std::shared_ptr<OCResource> resource)
 
                     swprintf_s(msgbuf, L"\tAddress of selected resource: %s\n",
                         Helper::StdStringToStdWString(resource->host()).c_str());
-                    MainPage::Current->ShowFoundText(ref new String(msgbuf));
+                    MainPage::Async->ShowFoundText(ref new String(msgbuf));
                   //std::cout << "\tAddress of selected resource: " << resource->host() << std::endl;
 
                     // Call a local function which will internally invoke get API on the resource pointer
@@ -631,12 +631,12 @@ void clientThread() {
     return;
 }
 
-IAsyncFunctions^ MainPage::Current = nullptr;
+IAsyncFunctions^ MainPage::Async = nullptr;
 
 MainPage::MainPage()
 {
     InitializeComponent();
-    MainPage::Current = this;
+    MainPage::Async = this;
 }
 
 void simpleclientUWP::MainPage::ShowNotify(

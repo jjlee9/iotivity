@@ -150,7 +150,7 @@ public:
 
         if (OC_STACK_OK != result)
         {
-            MainPage::Current->ShowNotify(
+            MainPage::Async->ShowNotify(
                 Helper::CharPtrToPlatformString("Resource creation was unsuccessful\n"),
                 NotifyType::Error);
           //cout << "Resource creation was unsuccessful\n";
@@ -187,7 +187,7 @@ public:
 
         if (OC_STACK_OK != result)
         {
-            MainPage::Current->ShowNotify(
+            MainPage::Async->ShowNotify(
                 Helper::CharPtrToPlatformString("Resource creation was unsuccessful\n"),
                 NotifyType::Error);
           //cout << "Resource creation was unsuccessful\n";
@@ -276,7 +276,7 @@ public:
         OCStackResult result = OCPlatform::bindTypeToResource(m_resourceHandle, type);
         if (OC_STACK_OK != result)
         {
-            MainPage::Current->ShowNotify(
+            MainPage::Async->ShowNotify(
                 Helper::CharPtrToPlatformString("Binding TypeName to Resource was unsuccessful\n"),
                 NotifyType::Error);
           //cout << "Binding TypeName to Resource was unsuccessful\n";
@@ -288,7 +288,7 @@ public:
         OCStackResult result = OCPlatform::bindInterfaceToResource(m_resourceHandle, iface);
         if (OC_STACK_OK != result)
         {
-            MainPage::Current->ShowNotify(
+            MainPage::Async->ShowNotify(
                 Helper::CharPtrToPlatformString("Binding TypeName to Resource was unsuccessful\n"),
                 NotifyType::Error);
           //cout << "Binding TypeName to Resource was unsuccessful\n";
@@ -300,7 +300,7 @@ private:
     // Entity handler can be implemented in several ways by the manufacturer
     OCEntityHandlerResult entityHandler(std::shared_ptr<OCResourceRequest> request)
     {
-        MainPage::Current->ShowRequestText(
+        MainPage::Async->ShowRequestText(
             Helper::CharPtrToPlatformString("\tIn Server CPP entity handler:\n"));
       //cout << "\tIn Server CPP entity handler:\n";
         OCEntityHandlerResult ehResult = OC_EH_ERROR;
@@ -312,7 +312,7 @@ private:
 
             if (requestFlag & RequestHandlerFlag::RequestFlag)
             {
-                MainPage::Current->ShowRequestText(
+                MainPage::Async->ShowRequestText(
                     Helper::CharPtrToPlatformString("\t\trequestFlag : Request\n"));
               //cout << "\t\trequestFlag : Request\n";
                 auto pResponse = std::make_shared<OC::OCResourceResponse>();
@@ -335,7 +335,7 @@ private:
                 // If the request type is GET
                 if (requestType == "GET")
                 {
-                    MainPage::Current->ShowRequestText(
+                    MainPage::Async->ShowRequestText(
                         Helper::CharPtrToPlatformString("\t\t\trequestType : GET\n"));
                   //cout << "\t\t\trequestType : GET\n";
                     if (isSlowResponse) // Slow response case
@@ -362,7 +362,7 @@ private:
                 }
                 else if (requestType == "PUT")
                 {
-                    MainPage::Current->ShowRequestText(
+                    MainPage::Async->ShowRequestText(
                         Helper::CharPtrToPlatformString("\t\t\trequestType : PUT\n"));
                   //cout << "\t\t\trequestType : PUT\n";
                     OCRepresentation rep = request->getResourceRepresentation();
@@ -380,7 +380,7 @@ private:
                 }
                 else if (requestType == "POST")
                 {
-                    MainPage::Current->ShowRequestText(
+                    MainPage::Async->ShowRequestText(
                         Helper::CharPtrToPlatformString("\t\t\trequestType : POST\n"));
                   //cout << "\t\t\trequestType : POST\n";
 
@@ -407,7 +407,7 @@ private:
                 }
                 else if (requestType == "DELETE")
                 {
-                    MainPage::Current->ShowRequestText(
+                    MainPage::Async->ShowRequestText(
                         Helper::CharPtrToPlatformString("Delete request received\n"));
                   //cout << "Delete request received" << endl;
                 }
@@ -456,7 +456,7 @@ private:
         }
         else
         {
-            MainPage::Current->ShowNotify(
+            MainPage::Async->ShowNotify(
                 Helper::CharPtrToPlatformString("Request invalid\n"),
                 NotifyType::Error);
           //std::cout << "Request invalid" << std::endl;
@@ -492,7 +492,7 @@ void * ChangeLightRepresentation(void *param)
 
             wchar_t msgbuf[256];
             swprintf_s(msgbuf, L"\nPower updated to : %d\n", lightPtr->m_power);
-            MainPage::Current->ShowEventText(ref new String(msgbuf));
+            MainPage::Async->ShowEventText(ref new String(msgbuf));
 
             OCStackResult result = OC_STACK_OK;
 
@@ -515,7 +515,7 @@ void * ChangeLightRepresentation(void *param)
             if (OC_STACK_NO_OBSERVERS == result)
             {
                 cout << "No More observers, stopping notifications" << endl;
-                MainPage::Current->ShowEventText(ref new String(L"No More observers, stopping notifications\n"));
+                MainPage::Async->ShowEventText(ref new String(L"No More observers, stopping notifications\n"));
                 gObservation = 0;
             }
         }
@@ -726,7 +726,7 @@ void serverThread()
 
     if (result != OC_STACK_OK)
     {
-        MainPage::Current->ShowNotify(
+        MainPage::Async->ShowNotify(
             Helper::CharPtrToPlatformString("Platform Registration failed\n"),
             NotifyType::Error);
       //std::cout << "Platform Registration failed\n";
@@ -737,7 +737,7 @@ void serverThread()
 
     if (result != OC_STACK_OK)
     {
-        MainPage::Current->ShowNotify(
+        MainPage::Async->ShowNotify(
             Helper::CharPtrToPlatformString("Device Registration failed\n"),
             NotifyType::Error);
       //std::cout << "Device Registration failed\n";
@@ -780,12 +780,12 @@ void serverThread()
     return;
 }
 
-IAsyncFunctions^ MainPage::Current = nullptr;
+IAsyncFunctions^ MainPage::Async = nullptr;
 
 MainPage::MainPage()
 {
     InitializeComponent();
-    MainPage::Current = this;
+    MainPage::Async = this;
 }
 
 void simpleserverUWP::MainPage::ShowNotify(

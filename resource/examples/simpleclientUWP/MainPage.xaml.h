@@ -27,7 +27,7 @@ namespace simpleclientUWP
         void Notify(Platform::String^ msg, NotifyType type);
 
     internal:
-        static IAsyncFunctions^ Current;
+        static IAsyncFunctions^ Async;
 
     private:
         void Start_Button_Click(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
