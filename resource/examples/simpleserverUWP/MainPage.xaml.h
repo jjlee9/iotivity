@@ -18,8 +18,11 @@ namespace simpleserverUWP
     public:
         MainPage();
 
+        virtual void ShowNotify(Platform::String^ msg, NotifyType type);
         virtual void ShowRequestText(Platform::String^ msg);
         virtual void ShowEventText(Platform::String^ msg);
+
+        void Notify(Platform::String^ msg, NotifyType type);
 
     internal:
         static IAsyncFunctions^ Current;

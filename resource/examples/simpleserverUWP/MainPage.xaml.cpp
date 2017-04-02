@@ -32,6 +32,7 @@ using namespace simpleserverUWP;
 using namespace Platform;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
+using namespace Windows::UI;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Controls::Primitives;
@@ -149,7 +150,10 @@ public:
 
         if (OC_STACK_OK != result)
         {
-            cout << "Resource creation was unsuccessful\n";
+            MainPage::Current->ShowNotify(
+                Helper::CharPtrToPlatformString("Resource creation was unsuccessful\n"),
+                NotifyType::Error);
+          //cout << "Resource creation was unsuccessful\n";
         }
     }
 
@@ -183,7 +187,10 @@ public:
 
         if (OC_STACK_OK != result)
         {
-            cout << "Resource creation was unsuccessful\n";
+            MainPage::Current->ShowNotify(
+                Helper::CharPtrToPlatformString("Resource creation was unsuccessful\n"),
+                NotifyType::Error);
+          //cout << "Resource creation was unsuccessful\n";
         }
 
         return result;
@@ -269,7 +276,10 @@ public:
         OCStackResult result = OCPlatform::bindTypeToResource(m_resourceHandle, type);
         if (OC_STACK_OK != result)
         {
-            cout << "Binding TypeName to Resource was unsuccessful\n";
+            MainPage::Current->ShowNotify(
+                Helper::CharPtrToPlatformString("Binding TypeName to Resource was unsuccessful\n"),
+                NotifyType::Error);
+          //cout << "Binding TypeName to Resource was unsuccessful\n";
         }
     }
 
@@ -278,7 +288,10 @@ public:
         OCStackResult result = OCPlatform::bindInterfaceToResource(m_resourceHandle, iface);
         if (OC_STACK_OK != result)
         {
-            cout << "Binding TypeName to Resource was unsuccessful\n";
+            MainPage::Current->ShowNotify(
+                Helper::CharPtrToPlatformString("Binding TypeName to Resource was unsuccessful\n"),
+                NotifyType::Error);
+          //cout << "Binding TypeName to Resource was unsuccessful\n";
         }
     }
 
@@ -443,7 +456,10 @@ private:
         }
         else
         {
-            std::cout << "Request invalid" << std::endl;
+            MainPage::Current->ShowNotify(
+                Helper::CharPtrToPlatformString("Request invalid\n"),
+                NotifyType::Error);
+          //std::cout << "Request invalid" << std::endl;
         }
 
         return ehResult;
@@ -710,7 +726,10 @@ void serverThread()
 
     if (result != OC_STACK_OK)
     {
-        std::cout << "Platform Registration failed\n";
+        MainPage::Current->ShowNotify(
+            Helper::CharPtrToPlatformString("Platform Registration failed\n"),
+            NotifyType::Error);
+      //std::cout << "Platform Registration failed\n";
         return;
     }
 
@@ -718,7 +737,10 @@ void serverThread()
 
     if (result != OC_STACK_OK)
     {
-        std::cout << "Device Registration failed\n";
+        MainPage::Current->ShowNotify(
+            Helper::CharPtrToPlatformString("Device Registration failed\n"),
+            NotifyType::Error);
+      //std::cout << "Device Registration failed\n";
         return;
     }
 
@@ -766,6 +788,17 @@ MainPage::MainPage()
     MainPage::Current = this;
 }
 
+void simpleserverUWP::MainPage::ShowNotify(
+    Platform::String^ msg,
+    NotifyType        type)
+{
+    Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal,
+        ref new Windows::UI::Core::DispatchedHandler([this, msg, type]()
+    {
+        Notify(msg, type);
+    }));
+}
+
 void MainPage::ShowRequestText(Platform::String^ msg)
 {
     Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal,
@@ -782,6 +815,35 @@ void MainPage::ShowEventText(Platform::String^ msg)
     {
         EventText->Text += msg;
     }));
+}
+
+void simpleserverUWP::MainPage::Notify(
+    Platform::String^ msg,
+    NotifyType        type)
+{
+    switch (type)
+    {
+    case NotifyType::Status:
+        NotifyBorder->Background = ref new SolidColorBrush(Colors::Green);
+        break;
+    case NotifyType::Error:
+        NotifyBorder->Background = ref new SolidColorBrush(Colors::Red);
+        break;
+    default:
+        break;
+    }
+
+    NotifyBlock->Text = msg;
+
+    // Collapse the StatusBlock if it has no text to conserve real estate.
+    if (NotifyBlock->Text != "")
+    {
+        NotifyBorder->Visibility = Xaml::Visibility::Visible;
+    }
+    else
+    {
+        NotifyBorder->Visibility = Xaml::Visibility::Collapsed;
+    }
 }
 
 void simpleserverUWP::MainPage::Start_Button_Click(
