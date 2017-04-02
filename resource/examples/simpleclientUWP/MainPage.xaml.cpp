@@ -30,6 +30,7 @@ using namespace simpleclientUWP;
 using namespace Platform;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
+using namespace Windows::UI;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Controls::Primitives;
@@ -638,6 +639,17 @@ MainPage::MainPage()
     MainPage::Current = this;
 }
 
+void simpleclientUWP::MainPage::ShowNotify(
+    Platform::String^ msg,
+    NotifyType        type)
+{
+    Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal,
+        ref new Windows::UI::Core::DispatchedHandler([this, msg, type]()
+    {
+        Notify(msg, type);
+    }));
+}
+
 void simpleclientUWP::MainPage::ShowFoundText(Platform::String^ msg)
 {
     Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal,
@@ -672,6 +684,35 @@ void simpleclientUWP::MainPage::ClearResultText()
     {
         ResultText->Text = "";
     }));
+}
+
+void simpleclientUWP::MainPage::Notify(
+    Platform::String^ msg,
+    NotifyType        type)
+{
+    switch (type)
+    {
+    case NotifyType::Status:
+        NotifyBorder->Background = ref new SolidColorBrush(Colors::Green);
+        break;
+    case NotifyType::Error:
+        NotifyBorder->Background = ref new SolidColorBrush(Colors::Red);
+        break;
+    default:
+        break;
+    }
+
+    NotifyBlock->Text = msg;
+
+    // Collapse the StatusBlock if it has no text to conserve real estate.
+    if (NotifyBlock->Text != "")
+    {
+        NotifyBorder->Visibility = Xaml::Visibility::Visible;
+    }
+    else
+    {
+        NotifyBorder->Visibility = Xaml::Visibility::Collapsed;
+    }
 }
 
 void simpleclientUWP::MainPage::Start_Button_Click(

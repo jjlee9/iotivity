@@ -18,10 +18,13 @@ namespace simpleclientUWP
     public:
         MainPage();
 
+        virtual void ShowNotify(Platform::String^ msg, NotifyType type);
         virtual void ShowFoundText(Platform::String^ msg);
         virtual void ClearFoundText();
         virtual void ShowResultText(Platform::String^ msg);
         virtual void ClearResultText();
+
+        void Notify(Platform::String^ msg, NotifyType type);
 
     internal:
         static IAsyncFunctions^ Current;
