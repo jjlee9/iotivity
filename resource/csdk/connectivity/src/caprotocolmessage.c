@@ -477,12 +477,14 @@ CAResult_t CAParseUriPartial(const unsigned char *str, size_t length, int target
     {
         unsigned char uriBuffer[CA_MAX_URI_LENGTH] = { 0 };
         unsigned char *pBuf = uriBuffer;
-        size_t buflen = sizeof(uriBuffer);
-        int res = (target == COAP_OPTION_URI_PATH) ? coap_split_path(str, length, pBuf, &buflen) :
-                                                     coap_split_query(str, length, pBuf, &buflen);
+        size_t unusedBufferSize = sizeof(uriBuffer);
+        int res = (target == COAP_OPTION_URI_PATH) ? coap_split_path(str, length, pBuf, &unusedBufferSize) :
+                                                     coap_split_query(str, length, pBuf, &unusedBufferSize);
 
         if (res > 0)
         {
+            assert(unusedBufferSize < sizeof(uriBuffer));
+            size_t usedBufferSize = sizeof(uriBuffer) - unusedBufferSize;
             size_t prevIdx = 0;
             while (res--)
             {
@@ -496,11 +498,13 @@ CAResult_t CAParseUriPartial(const unsigned char *str, size_t length, int target
                 }
 
                 size_t optSize = COAP_OPT_SIZE(pBuf);
-                if ((prevIdx + optSize) < buflen)
+                if (prevIdx + optSize > usedBufferSize)
                 {
-                    pBuf += optSize;
-                    prevIdx += optSize;
+                    assert(false);
+                    return CA_STATUS_INVALID_PARAM;
                 }
+                pBuf += optSize;
+                prevIdx += optSize;
             }
         }
         else
@@ -609,19 +613,17 @@ CAResult_t CAParsePayloadFormatHeadOption(uint16_t formatOption, CAPayloadFormat
         OIC_LOG(ERROR, TAG, "Format option not created");
         return CA_STATUS_INVALID_PARAM;
     }
-    else
+    int ret = coap_insert(optlist, encodeNode, CAOrderOpts);
+    if (0 >= ret)
     {
-        int ret = coap_insert(optlist, encodeNode, CAOrderOpts);
-        if (0 >= ret)
-        {
-            coap_delete(encodeNode);
-            OIC_LOG(ERROR, TAG, "Format option not inserted in header");
-            return CA_STATUS_INVALID_PARAM;
-        }
+        coap_delete(encodeNode);
+        OIC_LOG(ERROR, TAG, "Format option not inserted in header");
+        return CA_STATUS_INVALID_PARAM;
     }
 
-    if (COAP_OPTION_ACCEPT_VERSION == versionOption || 
-        COAP_OPTION_CONTENT_VERSION == versionOption)
+    if ((COAP_OPTION_ACCEPT_VERSION == versionOption ||
+         COAP_OPTION_CONTENT_VERSION == versionOption) &&
+        CA_FORMAT_APPLICATION_VND_OCF_CBOR == format)
     {
         versionNode = CACreateNewOptionNode(versionOption,
                 coap_encode_var_bytes(versionBuf, version), (char *) versionBuf);
@@ -632,10 +634,7 @@ CAResult_t CAParsePayloadFormatHeadOption(uint16_t formatOption, CAPayloadFormat
             coap_delete(encodeNode);
             return CA_STATUS_INVALID_PARAM;
         }
-    }
-    if (versionNode)
-    {
-        int ret = coap_insert(optlist, versionNode, CAOrderOpts);
+        ret = coap_insert(optlist, versionNode, CAOrderOpts);
         if (0 >= ret)
         {
             coap_delete(versionNode);
@@ -921,7 +920,8 @@ CAResult_t CAGetInfoFromPDU(const coap_pdu_t *pdu, const CAEndpoint_t *endpoint,
             {
                 if (2 == COAP_OPT_LENGTH(option))
                 {
-                    outInfo->payloadVersion =  coap_decode_var_bytes(COAP_OPT_VALUE(option), COAP_OPT_LENGTH(option));
+                    outInfo->payloadVersion = coap_decode_var_bytes(COAP_OPT_VALUE(option),
+                            COAP_OPT_LENGTH(option));
                 }
                 else
                 {
@@ -934,7 +934,8 @@ CAResult_t CAGetInfoFromPDU(const coap_pdu_t *pdu, const CAEndpoint_t *endpoint,
             {
                 if (2 == COAP_OPT_LENGTH(option))
                 {
-                    outInfo->acceptVersion = coap_decode_var_bytes(COAP_OPT_VALUE(option), COAP_OPT_LENGTH(option));
+                    outInfo->acceptVersion = coap_decode_var_bytes(COAP_OPT_VALUE(option),
+                                                                   COAP_OPT_LENGTH(option));
                 }
                 else
                 {
@@ -951,7 +952,8 @@ CAResult_t CAGetInfoFromPDU(const coap_pdu_t *pdu, const CAEndpoint_t *endpoint,
                 else if (2 == COAP_OPT_LENGTH(option))
                 {
                     outInfo->acceptFormat = CAConvertFormat(
-                            coap_decode_var_bytes(COAP_OPT_VALUE(option), COAP_OPT_LENGTH(option)));
+                            coap_decode_var_bytes(COAP_OPT_VALUE(option),
+                                                  COAP_OPT_LENGTH(option)));
                 }
                 else
                 {

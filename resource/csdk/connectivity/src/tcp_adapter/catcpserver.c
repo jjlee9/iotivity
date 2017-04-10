@@ -425,13 +425,13 @@ static void CAFindReadyMessage()
         CAPushEvent(OC_INVALID_SOCKET, socketArray,
                     caglobals.tcp.updateEvent, eventArray, &arraySize, _countof(socketArray));
     }
-    
+
     int svrlistBeginIndex = arraySize;
 
     while (!caglobals.tcp.terminate)
     {
         CATCPSessionInfo_t *session = NULL;
-        LL_FOREACH(g_sessionList, session);
+        LL_FOREACH(g_sessionList, session)
         {
             if (session && OC_INVALID_SOCKET != session->fd && (arraySize < EVENT_ARRAY_SIZE))
             {
@@ -1372,11 +1372,7 @@ CASocketFd_t CAConnectTCPSession(const CAEndpoint_t *endpoint)
         OIC_LOG(ERROR, TAG, "Out of memory");
         return OC_INVALID_SOCKET;
     }
-    memcpy(svritem->sep.endpoint.addr, endpoint->addr, sizeof(svritem->sep.endpoint.addr));
-    svritem->sep.endpoint.adapter = endpoint->adapter;
-    svritem->sep.endpoint.port = endpoint->port;
-    svritem->sep.endpoint.flags = endpoint->flags;
-    svritem->sep.endpoint.ifindex = endpoint->ifindex;
+    svritem->sep.endpoint = *endpoint;
     svritem->state = CONNECTING;
     svritem->isClient = true;
 
@@ -1438,7 +1434,7 @@ void CATCPDisconnectAll()
     oc_mutex_lock(g_mutexObjectList);
     CATCPSessionInfo_t *session = NULL;
     CATCPSessionInfo_t *tmp = NULL;
-    LL_FOREACH_SAFE(g_sessionList, session, tmp);
+    LL_FOREACH_SAFE(g_sessionList, session, tmp)
     {
         if (session)
         {
