@@ -704,7 +704,7 @@ unsigned char control_server_message_ECDHE_ECDSA_WITH_AES_128_CCM[] = {
     0x48, 0x45, 0x2d, 0x45, 0x43, 0x44, 0x53, 0x41, 0x2d, 0x57, 0x49, 0x54, 0x48, 0x2d, 0x41, 0x45,
     0x53, 0x2d, 0x31, 0x32, 0x38, 0x2d, 0x43, 0x43, 0x4d, 0x3c, 0x2f, 0x70, 0x3e, 0x0d, 0x0a
 };
-int control_server_message_ECDHE_ECDSA_WITH_AES_128_CCM_len = sizeof(control_server_message_ECDHE_ECDSA_WITH_AES_128_CCM);
+size_t control_server_message_ECDHE_ECDSA_WITH_AES_128_CCM_len = sizeof(control_server_message_ECDHE_ECDSA_WITH_AES_128_CCM);
 
 unsigned char control_server_message_ECDHE_ECDSA_WITH_AES_128_CCM_8[] = {
     0x48, 0x54, 0x54, 0x50, 0x2f, 0x31, 0x2e, 0x30, 0x20, 0x32, 0x30, 0x30, 0x20, 0x4f, 0x4b, 0x0d,
@@ -719,7 +719,7 @@ unsigned char control_server_message_ECDHE_ECDSA_WITH_AES_128_CCM_8[] = {
     0x53, 0x2d, 0x31, 0x32, 0x38, 0x2d, 0x43, 0x43, 0x4d, 0x2d, 0x38, 0x3c, 0x2f, 0x70, 0x3e, 0x0d,
     0x0a
 };
-int control_server_message_ECDHE_ECDSA_WITH_AES_128_CCM_8_len = sizeof(control_server_message_ECDHE_ECDSA_WITH_AES_128_CCM_8);
+size_t control_server_message_ECDHE_ECDSA_WITH_AES_128_CCM_8_len = sizeof(control_server_message_ECDHE_ECDSA_WITH_AES_128_CCM_8);
 
 unsigned char control_server_message_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256[] = {
     0x48, 0x54, 0x54, 0x50, 0x2f, 0x31, 0x2e, 0x30, 0x20, 0x32, 0x30, 0x30, 0x20, 0x4f, 0x4b, 0x0d,
@@ -734,7 +734,7 @@ unsigned char control_server_message_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256[] = {
     0x53, 0x2d, 0x31, 0x32, 0x38, 0x2d, 0x43, 0x42, 0x43, 0x2d, 0x53, 0x48, 0x41, 0x32, 0x35, 0x36,
     0x3c, 0x2f, 0x70, 0x3e, 0x0d, 0x0a
 };
-int control_server_message_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256_len = sizeof(control_server_message_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256);
+size_t control_server_message_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256_len = sizeof(control_server_message_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256);
 
 unsigned char control_server_message_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256[] = {
     0x48, 0x54, 0x54, 0x50, 0x2f, 0x31, 0x2e, 0x30, 0x20, 0x32, 0x30, 0x30, 0x20, 0x4f, 0x4b, 0x0d,
@@ -749,7 +749,7 @@ unsigned char control_server_message_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256[] = {
     0x53, 0x2d, 0x31, 0x32, 0x38, 0x2d, 0x47, 0x43, 0x4D, 0x2d, 0x53, 0x48, 0x41, 0x32, 0x35, 0x36,
     0x3c, 0x2f, 0x70, 0x3e, 0x0d, 0x0a
 };
-int control_server_message_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256_len = sizeof(control_server_message_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256);
+size_t control_server_message_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256_len = sizeof(control_server_message_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256);
 
 unsigned char control_server_message_ECDHE_ECDSA_WITH_AES_128_CBC_SHA[] = {
     0x48, 0x54, 0x54, 0x50, 0x2f, 0x31, 0x2e, 0x30, 0x20, 0x32, 0x30, 0x30, 0x20, 0x4f, 0x4b, 0x0d,
@@ -764,13 +764,13 @@ unsigned char control_server_message_ECDHE_ECDSA_WITH_AES_128_CBC_SHA[] = {
     0x53, 0x2d, 0x31, 0x32, 0x38, 0x2d, 0x43, 0x42, 0x43, 0x2d, 0x53, 0x48, 0x41, 0x3c, 0x2f, 0x70,
     0x3e, 0x0d, 0x0a
 };
-int control_server_message_ECDHE_ECDSA_WITH_AES_128_CBC_SHA_len = sizeof(control_server_message_ECDHE_ECDSA_WITH_AES_128_CBC_SHA);
+size_t control_server_message_ECDHE_ECDSA_WITH_AES_128_CBC_SHA_len = sizeof(control_server_message_ECDHE_ECDSA_WITH_AES_128_CBC_SHA);
 
 unsigned char control_client_message[] = {
     0x47, 0x45, 0x54, 0x20, 0x2f, 0x20, 0x48, 0x54, 0x54, 0x50, 0x2f, 0x31, 0x2e, 0x30, 0x0d, 0x0a,
     0x0d, 0x0a
 };
-int control_client_message_len = sizeof(control_client_message);
+size_t control_client_message_len = sizeof(control_client_message);
 
 unsigned char control_server_message_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384[] = {
     0x48, 0x54, 0x54, 0x50, 0x2f, 0x31, 0x2e, 0x30, 0x20, 0x32, 0x30, 0x30, 0x20, 0x4f, 0x4b, 0x0d,
@@ -785,7 +785,7 @@ unsigned char control_server_message_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384[] = {
     0x53, 0x2d, 0x32, 0x35, 0x36, 0x2d, 0x43, 0x42, 0x43, 0x2d, 0x53, 0x48, 0x41, 0x33, 0x38, 0x34,
     0x3c, 0x2f, 0x70, 0x3e, 0x0d, 0x0a
 };
-int control_server_message_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384_len = sizeof(control_server_message_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384);
+size_t control_server_message_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384_len = sizeof(control_server_message_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384);
 
 unsigned char control_server_message_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384[] = {
     0x48, 0x54, 0x54, 0x50, 0x2f, 0x31, 0x2e, 0x30, 0x20, 0x32, 0x30, 0x30, 0x20, 0x4f, 0x4b, 0x0d,
@@ -800,7 +800,7 @@ unsigned char control_server_message_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384[] = {
     0x53, 0x2d, 0x32, 0x35, 0x36, 0x2d, 0x47, 0x43, 0x4D, 0x2d, 0x53, 0x48, 0x41, 0x33, 0x38, 0x34,
     0x3c, 0x2f, 0x70, 0x3e, 0x0d, 0x0a
 };
-int control_server_message_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384_len = sizeof(control_server_message_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384);
+size_t control_server_message_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384_len = sizeof(control_server_message_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384);
 
 static volatile bool socket_error = false;
 
@@ -894,19 +894,30 @@ static void PacketReceive(unsigned char *data, int * datalen)
 
 static void infoCallback_that_loads_x509(PkiInfo_t * inf)
 {
-    inf->crt.data = (uint8_t*)serverCert;
     inf->crt.len = sizeof(serverCert);
-    inf->key.data = (uint8_t*)serverPrivateKey;
+    inf->crt.data = (uint8_t*)OICMalloc(inf->crt.len);
+    ASSERT_TRUE(inf->crt.data != NULL);
+    memcpy(inf->crt.data, serverCert, inf->crt.len);
+
     inf->key.len = sizeof(serverPrivateKey);
-    inf->ca.data = (uint8_t*)caCert;
+    inf->key.data = (uint8_t*)OICMalloc(inf->key.len);
+    ASSERT_TRUE(inf->key.data != NULL);
+    memcpy(inf->key.data, serverPrivateKey, inf->key.len);
+
+
     inf->ca.len = sizeof(caCert);
+    inf->ca.data = (uint8_t*)OICMalloc(inf->ca.len);
+    ASSERT_TRUE(inf->ca.data != NULL);
+    memcpy(inf->ca.data, caCert, inf->ca.len);
+
+
     inf->crl.data = NULL;
     inf->crl.len = 0;
 }
 
 static bool socketOpen_server()
 {
-    int portno;
+    unsigned short portno;
     struct sockaddr_in serv_addr, cli_addr;
     socklen_t clilen;
 

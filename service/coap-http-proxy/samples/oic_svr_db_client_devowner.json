@@ -49,40 +49,16 @@
                         }
                     ],
                     "permission": 2
-                },
-                {
-                    "subjectuuid": "*",
-                    "resources": [
-                        {
-                            "href": "/a/light",
-                            "rel": "",
-                            "rt": ["oic.core"],
-                            "if": ["oic.if.baseline"]
-                        },
-                        {
-                            "href": "/a/light0",
-                            "rel": "",
-                            "rt": ["oic.core"],
-                            "if": ["oic.if.baseline"]
-                        },
-                        {
-                            "href": "/a/light1",
-                            "rel": "",
-                            "rt": ["oic.core"],
-                            "if": ["oic.if.baseline"]
-                        }
-                    ],
-                    "permission": 6
                 }
             ]
         },
-        "rowneruuid" : "31313131-3131-3131-3131-313131313131"
+        "rowneruuid" : "32323232-3232-3232-3232-323232323232"
     },
     "pstat": {
         "dos": {"s": 3, "p": false},
         "isop": true,
-        "deviceuuid": "31313131-3131-3131-3131-313131313131",
-        "rowneruuid": "31313131-3131-3131-3131-313131313131",
+        "deviceuuid": "32323232-3232-3232-3232-323232323232",
+        "rowneruuid": "32323232-3232-3232-3232-323232323232",
         "cm": 0,
         "tm": 0,
         "om": 4,
@@ -93,15 +69,15 @@
         "oxmsel": 0,
         "sct": 1,
         "owned": true,
-        "deviceuuid": "31313131-3131-3131-3131-313131313131",
+        "deviceuuid": "32323232-3232-3232-3232-323232323232",
         "devowneruuid": "32323232-3232-3232-3232-323232323232",
-        "rowneruuid": "31313131-3131-3131-3131-313131313131"
+        "rowneruuid": "32323232-3232-3232-3232-323232323232"
     },
     "cred": {
         "creds": [
             {
                 "credid": 1,
-                "subjectuuid": "32323232-3232-3232-3232-323232323232",
+                "subjectuuid": "31313131-3131-3131-3131-313131313131",
                 "credtype": 1,
                 "privatedata": {
                     "data": "AAAAAAAAAAAAAAAA",
@@ -109,7 +85,6 @@
                 }
             }
         ],
-        "rowneruuid": "31313131-3131-3131-3131-313131313131"
+        "rowneruuid": "32323232-3232-3232-3232-323232323232"
     }
 }
-

@@ -18,7 +18,7 @@
  ******************************************************************/
 
 #include "logger.h"
-#include "TestElevatorServer.h"
+#include "testelevatorserver.h"
 #include "ipcatestdata.h"
 
 using namespace OC;
@@ -104,7 +104,6 @@ OCEntityHandlerResult ElevatorServer::ElevatorEntityHandler(
                             std::shared_ptr<OCResourceRequest> request)
 {
     OCEntityHandlerResult ehResult = OC_EH_ERROR;
-
     if (request->getResourceUri() == ELEVATOR_CO_RESOURCE_PATH)
     {
         return OC_EH_FORBIDDEN;

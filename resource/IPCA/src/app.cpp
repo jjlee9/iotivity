@@ -31,7 +31,9 @@ App::App(const IPCAAppInfo* ipcaAppInfo, IPCAVersion ipcaVersion) :
     m_isStopped(false),
     m_passwordInputCallbackHandle(nullptr),
     m_passwordDisplayCallbackHandle(nullptr),
-    m_ipcaVersion(ipcaVersion)
+    m_ipcaVersion(ipcaVersion),
+    m_passwordInputCallbackInfo(nullptr),
+    m_passwordDisplayCallbackInfo(nullptr)
 {
     m_ipcaAppInfo.appId = ipcaAppInfo->appId;
     m_ipcaAppInfo.appName = ipcaAppInfo->appName;
@@ -106,6 +108,19 @@ void App::Stop()
     ocfFramework.Stop(m_passwordInputCallbackHandle, m_passwordDisplayCallbackHandle);
     m_passwordInputCallbackHandle = nullptr;
     m_passwordDisplayCallbackHandle = nullptr;
+
+    // Deregister the callback info.
+    if (m_passwordInputCallbackInfo != nullptr)
+    {
+        DeleteAndUnregisterCallbackInfo(m_passwordInputCallbackInfo->mapKey);
+        m_passwordInputCallbackInfo = nullptr;
+    }
+
+    if (m_passwordDisplayCallbackInfo != nullptr)
+    {
+        DeleteAndUnregisterCallbackInfo(m_passwordDisplayCallbackInfo->mapKey);
+        m_passwordDisplayCallbackInfo = nullptr;
+    }
 }
 
 void App::AppWorkerThread(App* app)
@@ -116,7 +131,7 @@ void App::AppWorkerThread(App* app)
 
     const uint64_t PingPeriodMS = 30000;  // Do device ping for Observed devices every 30 seconds.
 
-    // Outstanding requests should time out in 2 seconds per rfc 7252.
+    // Outstanding requests should time out in 247 seconds (EXCHANGE_LIFETIME) per rfc 7252.
     // Wake up every second to check.
     const size_t AppThreadSleepTimeSeconds = 1;
     std::chrono::seconds appThreadSleepTime(AppThreadSleepTimeSeconds);
@@ -365,6 +380,10 @@ IPCAStatus App::SetPasswordCallbacks(
 
     ocfFramework.SetInputPasswordCallback(inputCallbackInfo, &m_passwordInputCallbackHandle);
     ocfFramework.SetDisplayPasswordCallback(displayCallbackInfo, &m_passwordDisplayCallbackHandle);
+
+    // The CallbackInfo to be deregistered in Stop().
+    m_passwordInputCallbackInfo = inputCallbackInfo;
+    m_passwordDisplayCallbackInfo = displayCallbackInfo;
 
     return IPCA_OK;
 }
@@ -661,7 +680,9 @@ IPCAStatus App::DeleteResource(
     return status;
 }
 
-void App::CloseIPCAHandle(IPCAHandle handle)
+IPCAStatus App::CloseIPCAHandle(IPCAHandle handle,
+                    IPCACloseHandleComplete closeHandleComplete,
+                    const void* context)
 {
     size_t mapKey = reinterpret_cast<size_t>(handle);
 
@@ -682,7 +703,7 @@ void App::CloseIPCAHandle(IPCAHandle handle)
         }
     }
 
-    DeleteAndUnregisterCallbackInfo(mapKey);
+    return DeleteAndUnregisterCallbackInfo(mapKey, closeHandleComplete, context);
 }
 
 IPCAStatus App::CreateAndRegisterNewCallbackInfo(
@@ -734,7 +755,10 @@ IPCAStatus App::CreateAndRegisterNewCallbackInfo(
     return status;
 }
 
-void App::DeleteAndUnregisterCallbackInfo(size_t mapKey)
+IPCAStatus App::DeleteAndUnregisterCallbackInfo(
+                                size_t mapKey,
+                                IPCACloseHandleComplete closeHandleComplete,
+                                const void* context)
 {
-    m_callback->RemoveCallbackInfo(mapKey);
+    return m_callback->RemoveCallbackInfo(mapKey, closeHandleComplete, context);
 }

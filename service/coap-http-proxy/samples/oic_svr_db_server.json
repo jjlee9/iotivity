@@ -49,16 +49,52 @@
                         }
                     ],
                     "permission": 2
+                },
+                {
+                    "subjectuuid": "32323232-3232-3232-3232-323232323232",
+                    "resources": [
+                        {
+                            "href": "*",
+                            "rel": "",
+                            "rt": ["*"],
+                            "if": ["*"]
+                        }
+                    ],
+                    "permission": 7
+                },
+                {
+                    "subjectuuid": "31393139-3139-3139-3139-313931393139",
+                    "resources": [
+                        {
+                            "href": "/a/led",
+                            "rel": "",
+                            "rt": ["oic.core"],
+                            "if": ["oic.if.baseline"]
+                        }
+                    ],
+                    "permission": 7
+                },
+                {
+                    "subjectuuid": "37373737-3737-3737-3737-373737373737",
+                    "resources": [
+                        {
+                            "href": "/a/led",
+                            "rel": "",
+                            "rt": ["oic.core"],
+                            "if": ["oic.if.baseline"]
+                        }
+                    ],
+                    "permission": 6
                 }
             ]
         },
-        "rowneruuid" : "32323232-3232-3232-3232-323232323232"
+        "rowneruuid" : "31313131-3131-3131-3131-313131313131"
     },
     "pstat": {
         "dos": {"s": 3, "p": false},
         "isop": true,
-        "deviceuuid": "32323232-3232-3232-3232-323232323232",
-        "rowneruuid": "32323232-3232-3232-3232-323232323232",
+        "deviceuuid": "31313131-3131-3131-3131-313131313131",
+        "rowneruuid": "31313131-3131-3131-3131-313131313131",
         "cm": 0,
         "tm": 0,
         "om": 4,
@@ -69,18 +105,29 @@
         "oxmsel": 0,
         "sct": 1,
         "owned": true,
-        "deviceuuid": "32323232-3232-3232-3232-323232323232",
+        "deviceuuid": "31313131-3131-3131-3131-313131313131",
         "devowneruuid": "32323232-3232-3232-3232-323232323232",
-        "rowneruuid": "32323232-3232-3232-3232-323232323232"
+        "rowneruuid": "31313131-3131-3131-3131-313131313131"
     },
     "cred": {
         "creds": [
             {
                 "credid": 1,
-                "subjectuuid": "31313131-3131-3131-3131-313131313131",
+                "subjectuuid": "32323232-3232-3232-3232-323232323232",
                 "credtype": 1,
+                "period": "20150630T060000/20990920T220000",
                 "privatedata": {
                     "data": "AAAAAAAAAAAAAAAA",
+                    "encoding": "oic.sec.encoding.raw"
+                }
+            },
+            {
+                "credid": 2,
+                "subjectuuid": "31393139-3139-3139-3139-313931393139",
+                "credtype": 1,
+                "period": "20150630T060000/20990920T220000",
+                "privatedata": {
+                    "data": "BBBBBBBBBBBBBBBB",
                     "encoding": "oic.sec.encoding.raw"
                 }
             }

@@ -67,7 +67,6 @@
 #include <unistd.h>
 #endif
 
-
 /**
  * @def MBED_TLS_VERSION_LEN
  * @brief mbedTLS version string length
@@ -278,11 +277,9 @@ mbedtls_ecp_group_id curve[ADAPTER_CURVE_MAX][2] =
     {MBEDTLS_ECP_DP_SECP256R1, MBEDTLS_ECP_DP_NONE}
 };
 
-static PkiInfo_t g_pkiInfo = {{NULL, 0}, {NULL, 0}, {NULL, 0}, {NULL, 0}};
-
 typedef struct  {
     int code;
-    int alert;
+    unsigned char alert;
 } CrtVerifyAlert_t;
 
 static const CrtVerifyAlert_t crtVerifyAlerts[] = {
@@ -309,7 +306,7 @@ static const CrtVerifyAlert_t crtVerifyAlerts[] = {
     {0, 0}
 };
 
-static int GetAlertCode(uint32_t flags)
+static unsigned char GetAlertCode(uint32_t flags)
 {
     const CrtVerifyAlert_t *cur;
 
@@ -518,7 +515,11 @@ static int SendCallBack(void * tep, const unsigned char * data, size_t dataLen)
         size_t dataToSend = (dataLen > INT_MAX) ? INT_MAX : dataLen;
         CAPacketSendCallback sendCallback = g_caSslContext->adapterCallbacks[adapterIndex].sendCallback;
         sentLen = sendCallback(&(((SslEndPoint_t * )tep)->sep.endpoint), (const void *) data, dataToSend);
-        if (sentLen != dataLen)
+        if (0 > sentLen)
+        {
+            OIC_LOG(ERROR, NET_SSL_TAG, "Error sending packet. The error will be reported in the adapter.");
+        }
+        else if ((size_t)sentLen != dataLen)
         {
             OIC_LOG_V(DEBUG, NET_SSL_TAG,
                       "Packet was partially sent - sent/total/remained bytes : %d/%" PRIuPTR "/%" PRIuPTR,
@@ -580,8 +581,8 @@ static int ParseChain(mbedtls_x509_crt * crt, unsigned char * buf, size_t bufLen
 {
     int ret;
     OIC_LOG_V(DEBUG, NET_SSL_TAG, "In %s", __func__);
-    VERIFY_NON_NULL_RET(crt, NET_SSL_TAG, "Param crt is NULL" , -1);
-    VERIFY_NON_NULL_RET(buf, NET_SSL_TAG, "Param buf is NULL" , -1);
+    VERIFY_NON_NULL_RET(crt, NET_SSL_TAG, "Param crt is NULL", -1);
+    VERIFY_NON_NULL_RET(buf, NET_SSL_TAG, "Param buf is NULL", -1);
 
     if (NULL != errNum)
     {
@@ -605,15 +606,39 @@ static int ParseChain(mbedtls_x509_crt * crt, unsigned char * buf, size_t bufLen
     {
         *errNum = ret;
     }
-    
+
     ret = 0;
     for (const mbedtls_x509_crt *cur = crt; cur != NULL; cur = cur->next)
     {
         ret++;
     }
-    
+
     OIC_LOG_V(DEBUG, NET_SSL_TAG, "Out %s", __func__);
     return ret;
+}
+
+/**
+ * Deinit Pki Info
+ *
+ * @param[out] inf structure with certificate, private key and crl to be free.
+ *
+ */
+static void DeInitPkixInfo(PkiInfo_t * inf)
+{
+    OIC_LOG_V(DEBUG, NET_SSL_TAG, "In %s", __func__);
+    if (NULL == inf)
+    {
+        OIC_LOG(ERROR, NET_SSL_TAG, "NULL passed");
+        OIC_LOG_V(DEBUG, NET_SSL_TAG, "Out %s", __func__);
+        return;
+    }
+
+    DEINIT_BYTE_ARRAY(inf->crt);
+    DEINIT_BYTE_ARRAY(inf->key);
+    DEINIT_BYTE_ARRAY(inf->ca);
+    DEINIT_BYTE_ARRAY(inf->crl);
+
+    OIC_LOG_V(DEBUG, NET_SSL_TAG, "Out %s", __func__);
 }
 
 //Loads PKIX related information from SRM
@@ -622,9 +647,16 @@ static int InitPKIX(CATransportAdapter_t adapter)
     OIC_LOG_V(DEBUG, NET_SSL_TAG, "In %s", __func__);
     VERIFY_NON_NULL_RET(g_getPkixInfoCallback, NET_SSL_TAG, "PKIX info callback is NULL", -1);
     // load pk key, cert, trust chain and crl
+    PkiInfo_t pkiInfo = {
+        BYTE_ARRAY_INITIALIZER,
+        BYTE_ARRAY_INITIALIZER,
+        BYTE_ARRAY_INITIALIZER,
+        BYTE_ARRAY_INITIALIZER
+    };
+
     if (g_getPkixInfoCallback)
     {
-        g_getPkixInfoCallback(&g_pkiInfo);
+        g_getPkixInfoCallback(&pkiInfo);
     }
 
     VERIFY_NON_NULL_RET(g_caSslContext, NET_SSL_TAG, "SSL Context is NULL", -1);
@@ -648,7 +680,7 @@ static int InitPKIX(CATransportAdapter_t adapter)
     // optional
     int ret;
     int errNum;
-    int count = ParseChain(&g_caSslContext->crt, g_pkiInfo.crt.data, g_pkiInfo.crt.len, &errNum);
+    int count = ParseChain(&g_caSslContext->crt, pkiInfo.crt.data, pkiInfo.crt.len, &errNum);
     if (0 >= count)
     {
         OIC_LOG(WARNING, NET_SSL_TAG, "Own certificate chain parsing error");
@@ -659,7 +691,7 @@ static int InitPKIX(CATransportAdapter_t adapter)
         OIC_LOG_V(WARNING, NET_SSL_TAG, "Own certificate chain parsing error: %d certs failed to parse", errNum);
         goto required;
     }
-    ret =  mbedtls_pk_parse_key(&g_caSslContext->pkey, g_pkiInfo.key.data, g_pkiInfo.key.len,
+    ret =  mbedtls_pk_parse_key(&g_caSslContext->pkey, pkiInfo.key.data, pkiInfo.key.len,
                                                                                NULL, 0);
     if (0 != ret)
     {
@@ -697,11 +729,12 @@ static int InitPKIX(CATransportAdapter_t adapter)
     }
 
     required:
-    count = ParseChain(&g_caSslContext->ca, g_pkiInfo.ca.data, g_pkiInfo.ca.len, &errNum);
+    count = ParseChain(&g_caSslContext->ca, pkiInfo.ca.data, pkiInfo.ca.len, &errNum);
     if(0 >= count)
     {
         OIC_LOG(ERROR, NET_SSL_TAG, "CA chain parsing error");
         OIC_LOG_V(DEBUG, NET_SSL_TAG, "Out %s", __func__);
+        DeInitPkixInfo(&pkiInfo);
         return -1;
     }
     if(0 != errNum)
@@ -709,7 +742,7 @@ static int InitPKIX(CATransportAdapter_t adapter)
         OIC_LOG_V(WARNING, NET_SSL_TAG, "CA chain parsing warning: %d certs failed to parse", errNum);
     }
 
-    ret = mbedtls_x509_crl_parse_der(&g_caSslContext->crl, g_pkiInfo.crl.data, g_pkiInfo.crl.len);
+    ret = mbedtls_x509_crl_parse_der(&g_caSslContext->crl, pkiInfo.crl.data, pkiInfo.crl.len);
     if(0 != ret)
     {
         OIC_LOG(WARNING, NET_SSL_TAG, "CRL parsing error");
@@ -720,6 +753,8 @@ static int InitPKIX(CATransportAdapter_t adapter)
         CONF_SSL(clientConf, serverConf, mbedtls_ssl_conf_ca_chain,
                  &g_caSslContext->ca, &g_caSslContext->crl);
     }
+
+    DeInitPkixInfo(&pkiInfo);
 
     OIC_LOG_V(DEBUG, NET_SSL_TAG, "Out %s", __func__);
     return 0;
@@ -1029,6 +1064,8 @@ static bool checkSslOperation(SslEndPoint_t*  peer,
                               const char* str,
                               unsigned char msg)
 {
+    OC_UNUSED(str);
+
     if ((0 != ret) &&
         (MBEDTLS_ERR_SSL_PEER_CLOSE_NOTIFY != ret) &&
         (MBEDTLS_ERR_SSL_HELLO_VERIFY_REQUIRED != ret) &&
@@ -1293,8 +1330,9 @@ static void SetupCipher(mbedtls_ssl_config * config, CATransportAdapter_t adapte
 
     g_getCredentialTypesCallback(g_caSslContext->cipherFlag, deviceId);
 
-    // Retrieve the PSK credential from SRM
-    if (true == g_caSslContext->cipherFlag[0] && 0 != InitPskIdentity(config))
+    // Retrieve the PSK credential from SRM or use PIN based generation
+    if ((SSL_ECDHE_PSK_WITH_AES_128_CBC_SHA256 == g_caSslContext->cipher ||
+         true == g_caSslContext->cipherFlag[0]) && 0 != InitPskIdentity(config))
     {
         OIC_LOG(ERROR, NET_SSL_TAG, "PSK identity initialization failed!");
     }
@@ -2075,7 +2113,7 @@ CAResult_t CAdecryptSsl(const CASecureEndpoint_t *sep, uint8_t *data, size_t dat
                     /* If UUID_PREFIX is present, ensure there's enough data for the prefix plus an entire
                      * UUID, to make sure we don't read past the end of the buffer.
                      */
-                    if ((NULL != uuidPos) && 
+                    if ((NULL != uuidPos) &&
                         (name->val.len >= ((uuidPos - name->val.p) + (sizeof(UUID_PREFIX) - 1) + uuidBufLen)))
                     {
                         memcpy(uuid, uuidPos + sizeof(UUID_PREFIX) - 1, uuidBufLen);
@@ -2289,7 +2327,6 @@ CAResult_t CAsetTlsCipherSuite(const uint32_t cipher)
     OIC_LOG_V(DEBUG, NET_SSL_TAG, "In %s", __func__);
     VERIFY_NON_NULL_RET(g_caSslContext, NET_SSL_TAG, "SSL context is not initialized." , CA_STATUS_NOT_INITIALIZED);
 
-    CAResult_t res = CA_STATUS_FAILED;
     SslCipher_t index = GetCipherIndex(cipher);
     if (SSL_CIPHER_MAX == index)
     {
@@ -2354,10 +2391,11 @@ static int pHash (const unsigned char *key, size_t keyLen,
      const unsigned char *random2, size_t random2Len,
      unsigned char *buf, size_t bufLen)
 {
-    unsigned char A[RANDOM_LEN] = {0};
-    unsigned char tmp[RANDOM_LEN] = {0};
+    unsigned char A[MBEDTLS_MD_MAX_SIZE] = {0};
+    unsigned char tmp[MBEDTLS_MD_MAX_SIZE] = {0};
     size_t dLen;   /* digest length */
     size_t len = 0;   /* result length */
+    const mbedtls_md_type_t hashAlg = MBEDTLS_MD_SHA256;
 
     VERIFY_TRUE_RET(bufLen <= INT_MAX, NET_SSL_TAG, "buffer too large", -1);
     VERIFY_NON_NULL_RET(key, NET_SSL_TAG, "key is NULL", -1);
@@ -2372,8 +2410,8 @@ static int pHash (const unsigned char *key, size_t keyLen,
     mbedtls_md_init(&hmacA);
     mbedtls_md_init(&hmacP);
 
-    CHECK_MBEDTLS_RET(mbedtls_md_setup, &hmacA, mbedtls_md_info_from_type(MBEDTLS_MD_SHA256), 1);
-    CHECK_MBEDTLS_RET(mbedtls_md_setup, &hmacP, mbedtls_md_info_from_type(MBEDTLS_MD_SHA256), 1);
+    CHECK_MBEDTLS_RET(mbedtls_md_setup, &hmacA, mbedtls_md_info_from_type(hashAlg), 1);
+    CHECK_MBEDTLS_RET(mbedtls_md_setup, &hmacP, mbedtls_md_info_from_type(hashAlg), 1);
 
     CHECK_MBEDTLS_RET(mbedtls_md_hmac_starts, &hmacA, key, keyLen );
     CHECK_MBEDTLS_RET(mbedtls_md_hmac_update, &hmacA, label, labelLen);
@@ -2381,7 +2419,7 @@ static int pHash (const unsigned char *key, size_t keyLen,
     CHECK_MBEDTLS_RET(mbedtls_md_hmac_update, &hmacA, random2, random2Len);
     CHECK_MBEDTLS_RET(mbedtls_md_hmac_finish, &hmacA, A);
 
-    dLen = RANDOM_LEN;
+    dLen = mbedtls_md_get_size(mbedtls_md_info_from_type(hashAlg));
 
     CHECK_MBEDTLS_RET(mbedtls_md_hmac_starts, &hmacP, key, keyLen);
 
@@ -2393,10 +2431,9 @@ static int pHash (const unsigned char *key, size_t keyLen,
         CHECK_MBEDTLS_RET(mbedtls_md_hmac_update, &hmacP, label, labelLen);
         CHECK_MBEDTLS_RET(mbedtls_md_hmac_update, &hmacP, random1, random1Len);
         CHECK_MBEDTLS_RET(mbedtls_md_hmac_update, &hmacP, random2, random2Len);
-
         CHECK_MBEDTLS_RET(mbedtls_md_hmac_finish, &hmacP, tmp);
 
-        len += RANDOM_LEN;
+        len += dLen;
 
         memcpy(buf, tmp, dLen);
         buf += dLen;
@@ -2407,16 +2444,18 @@ static int pHash (const unsigned char *key, size_t keyLen,
         CHECK_MBEDTLS_RET(mbedtls_md_hmac_finish, &hmacA, A);
     }
 
-    CHECK_MBEDTLS_RET(mbedtls_md_hmac_reset, &hmacP);
-    CHECK_MBEDTLS_RET(mbedtls_md_hmac_starts, &hmacP, key, keyLen);
-    CHECK_MBEDTLS_RET(mbedtls_md_hmac_update, &hmacP, A, dLen);
+    if ((bufLen % dLen) != 0)
+    {
+        CHECK_MBEDTLS_RET(mbedtls_md_hmac_reset, &hmacP);
+        CHECK_MBEDTLS_RET(mbedtls_md_hmac_starts, &hmacP, key, keyLen);
+        CHECK_MBEDTLS_RET(mbedtls_md_hmac_update, &hmacP, A, dLen);
+        CHECK_MBEDTLS_RET(mbedtls_md_hmac_update, &hmacP, label, labelLen);
+        CHECK_MBEDTLS_RET(mbedtls_md_hmac_update, &hmacP, random1, random1Len);
+        CHECK_MBEDTLS_RET(mbedtls_md_hmac_update, &hmacP, random2, random2Len);
+        CHECK_MBEDTLS_RET(mbedtls_md_hmac_finish, &hmacP, tmp);
 
-    CHECK_MBEDTLS_RET(mbedtls_md_hmac_update, &hmacP, label, labelLen);
-    CHECK_MBEDTLS_RET(mbedtls_md_hmac_update, &hmacP, random1, random1Len);
-    CHECK_MBEDTLS_RET(mbedtls_md_hmac_update, &hmacP, random2, random2Len);
-    CHECK_MBEDTLS_RET(mbedtls_md_hmac_finish, &hmacP, tmp);
-
-    memcpy(buf, tmp, bufLen - len);
+        memcpy(buf, tmp, bufLen - len);
+    }
 
     mbedtls_md_free(&hmacA);
     mbedtls_md_free(&hmacP);

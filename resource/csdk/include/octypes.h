@@ -28,7 +28,6 @@
 #ifndef OCTYPES_H_
 #define OCTYPES_H_
 
-#include "iotivity_config.h"
 #include "ocstackconfig.h"
 #include <stdbool.h>
 #include <stdint.h>
@@ -639,17 +638,6 @@ extern "C" {
 #define OC_RSRVD_REDIRECT_URI             "redirecturi"
 
 #define OC_RSRVD_CERTIFICATE              "certificate"
-/**
- * Mark a parameter as unused. Used to prevent unused variable compiler warnings.
- * Used in three cases:
- * 1. in callbacks when one of the parameters are unused
- * 2. when due to code changes a functions parameter is no longer
- *    used but must be left in place for backward compatibility
- *    reasons.
- * 3. a variable is only used in the debug build variant and would
- *    give a build warning in release mode.
- */
-#define OC_UNUSED(x) (void)(x)
 
 /**
  * These enums (OCTransportAdapter and OCTransportFlags) must
@@ -1127,6 +1115,7 @@ typedef enum
     OC_STACK_FORBIDDEN_REQ,          /** 403*/
     OC_STACK_INTERNAL_SERVER_ERROR,  /** 500*/
     OC_STACK_GATEWAY_TIMEOUT,        /** 504*/
+    OC_STACK_SERVICE_UNAVAILABLE,    /** 503*/
 
     /** ERROR in stack.*/
     OC_STACK_ERROR = 255
@@ -1261,7 +1250,7 @@ typedef struct OCHeaderOption
     /** pointer to its data.*/
     uint8_t optionData[MAX_HEADER_OPTION_DATA_LENGTH];
 
-#ifdef SUPPORTS_DEFAULT_CTOR
+#ifdef __cplusplus
     OCHeaderOption() = default;
     OCHeaderOption(OCTransportProtocolID pid,
                    uint16_t optId,
@@ -1278,7 +1267,7 @@ typedef struct OCHeaderOption
         memcpy(optionData, optData, optionLength);
         optionData[optionLength - 1] = '\0';
     }
-#endif
+#endif // __cplusplus
 } OCHeaderOption;
 
 /**
@@ -1429,7 +1418,9 @@ typedef enum
     /** The payload is an OCSecurityPayload */
     PAYLOAD_TYPE_SECURITY,
     /** The payload is an OCPresencePayload */
-    PAYLOAD_TYPE_PRESENCE
+    PAYLOAD_TYPE_PRESENCE,
+    /** The payload is an OCDiagnosticPayload */
+    PAYLOAD_TYPE_DIAGNOSTIC
 } OCPayloadType;
 
 /**
@@ -1588,6 +1579,12 @@ typedef struct
     char* resourceType;
 } OCPresencePayload;
 #endif
+
+typedef struct
+{
+    OCPayload base;
+    char* message;
+} OCDiagnosticPayload;
 
 /**
  * Incoming requests handled by the server. Requests are passed in as a parameter to the
@@ -1787,11 +1784,11 @@ typedef struct OCCallbackData
     /** A pointer to a function to delete the context when this callback is removed.*/
     OCClientContextDeleter cd;
 
-#ifdef SUPPORTS_DEFAULT_CTOR
+#ifdef __cplusplus
     OCCallbackData() = default;
     OCCallbackData(void* ctx, OCClientResponseHandler callback, OCClientContextDeleter deleter)
         :context(ctx), cb(callback), cd(deleter){}
-#endif
+#endif // __cplusplus
 } OCCallbackData;
 
 /**

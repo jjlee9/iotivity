@@ -3,6 +3,7 @@
 
 ConvertUuidToStr
 
+OCAssertRoles
 OCConfigSelfOwnership
 OCConvertDerCSRToPem
 OCDeleteACLList
@@ -55,9 +56,8 @@ OCSetOxmAllowStatus
 OCUnlinkDevices
 OCVerifyCSRSignature
 
-; @todo: Remove or revise SRPAssertRoles once IOT-1952 is resolved. It should
-; not be here in the release
-SRPAssertRoles
+PMGenerateQuery
+
 
 SetClosePinDisplayCB
 SetDisplayPinWithContextCB

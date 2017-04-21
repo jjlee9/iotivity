@@ -30,10 +30,6 @@
 #define PLATFORM_FEATURES_H_
 
 
-#if (__cplusplus >=201103L) || defined(__GXX_EXPERIMENTAL_CXX0X__)
-#  define SUPPORTS_DEFAULT_CTOR
-#endif
-
 #if (__STDC_VERSION__ >= 201112L)
 #  include <assert.h>
 #  define OC_STATIC_ASSERT(condition, msg) static_assert(condition, msg)
@@ -74,9 +70,6 @@
 #  define ssize_t SSIZE_T
 #  define SHUT_RDWR           SD_BOTH
 #  define sleep(SECS)         Sleep(1000*(SECS))
-#  ifdef __cplusplus
-#    define SUPPORTS_DEFAULT_CTOR
-#  endif
 #  include "windows/include/memmem.h"
 #  include "windows/include/win_sleep.h"
 #  include "windows/include/pthread_create.h"
@@ -107,5 +100,22 @@
  */
 #  define UINT16_MAX 65535
 #endif
+
+/**
+ * Calling convention.
+ */
+#ifdef _WIN32
+/*
+ * Set to __stdcall for Windows, consistent with WIN32 APIs.
+ */
+#  define OC_CALL   __stdcall
+#else
+#  define OC_CALL
+#endif
+
+/**
+ * Mark a parameter as unused. Used to prevent unused variable compiler warnings.
+ */
+#define OC_UNUSED(x) (void)(x)
 
 #endif
